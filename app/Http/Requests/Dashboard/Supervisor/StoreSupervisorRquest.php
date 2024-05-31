@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Manager;
+namespace App\Http\Requests\Dashboard\Supervisor;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class StoreManagerRequest extends FormRequest
+class StoreSupervisorRquest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,6 +30,7 @@ class StoreManagerRequest extends FormRequest
             'phone_number' => ['required','string','digits:10'],
             'governorate' => ['required','string'],
             'date_of_birth' => ['required','date']
+
         ];
     }
 }

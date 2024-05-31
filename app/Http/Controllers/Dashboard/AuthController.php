@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\AdminResource;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -17,21 +18,15 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => ['required',Password::min(8)->letters()->numbers()],
+            'password' => 'required|string|min:8',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(),400);
         }
         if (!$token = auth('admin')->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 400);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
-    }
-
-    public function logout()
-    {
-        auth('admin')->logout();
-        return response()->json(['message' => 'User successfully signed out']);
     }
 
 
@@ -45,5 +40,4 @@ class AuthController extends Controller
             'user' => new AdminResource($user)
         ]);
     }
-
 }

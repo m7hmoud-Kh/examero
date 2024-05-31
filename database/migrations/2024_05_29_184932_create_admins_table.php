@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_number');
             $table->string('governorate');
+            $table->date('date_of_birth');
             $table->boolean('is_block')->default(false);
             $table->timestamps();
         });

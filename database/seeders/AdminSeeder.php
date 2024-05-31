@@ -27,9 +27,10 @@ class AdminSeeder extends Seeder
             'first_name' => $faker->firstName(),
             'last_name' => $faker->lastName(),
             'email' => 'khairymahmoud795@gmail.com',
-            'password' => Hash::make('123456asd'),
+            'password' => '123456asd',
             'phone_number' => '01143124020',
-            'governorate' => 'assuit'
+            'governorate' => 'assuit',
+            'date_of_birth' => $faker->date()
         ]);
         $owner->assignRole('owner');
 

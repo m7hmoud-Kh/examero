@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Manager;
+namespace App\Http\Requests\Dashboard\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
-class UpdateManagerRequest extends FormRequest
+class UpdateAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +27,7 @@ class UpdateManagerRequest extends FormRequest
         return [
             'first_name' => ['string'],
             'last_name' => ['string'],
-            'email' => ['email',Rule::unique('admins')->ignore($this->managerId)],
-            'password' => [Password::min(8)->letters()->numbers()],
+            'email' => ['email',Rule::unique('admins')->ignore(Auth::user('admin')->id)],
             'phone_number' => ['string','digits:10'],
             'governorate' => ['string'],
             'date_of_birth' => ['date']

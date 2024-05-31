@@ -22,6 +22,7 @@ class AdminResource extends JsonResource
             'email' => $this->email,
             'phone_number' => $this->phone_number,
             'governorate' => $this->governorate,
+            'date_of_birth' => $this->date_of_birth,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s'),
             'role_id' => $this->roles[0]->id,
             'role_name' => $this->roles[0]->name,
