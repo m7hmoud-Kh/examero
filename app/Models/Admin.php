@@ -13,9 +13,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Admin extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    protected $gaurded = [];
+    protected $guarded = [];
     protected $hidden = [
         'password'
     ];

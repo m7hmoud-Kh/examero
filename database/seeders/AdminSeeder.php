@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Role::create(['guard_name' => 'admin', 'name' => 'owner']);
-        Role::create(['guard_name' => 'admin', 'name' => 'admin']);
+        Role::create(['guard_name' => 'admin', 'name' => 'manager']);
         Role::create(['guard_name' => 'admin', 'name' => 'supervisor']);
 
 
