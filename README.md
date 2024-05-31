@@ -64,3 +64,105 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+## Deployment
+
+To deploy this project run
+
+```bash
+  composer install
+```
+
+```bash
+  cp .env.example .env
+```
+
+```bash
+  php artisan key:generate
+```
+
+To generate Key JWT
+
+```bash
+  php artisan jwt:secret
+```
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DB_PORT`=3306
+
+`DB_DATABASE`=examero (You Must create DB with this name)
+
+`DB_USERNAME`=root
+
+`DB_PASSWORD`=password
+
+
+## Migration Database
+
+```bash
+  php artisan migrate:fresh --seed
+```
+
+## running server
+
+```bash
+  php artisan serve
+```
+
+## Running with Docker
+
+```bash
+ docker-compose up --build
+```
+
+
+```bash
+  cp .env.example .env
+```
+
+
+### To run this project, you will need to add the following environment variables to your .env file
+
+
+`DB_HOST`=db
+
+`DB_PORT`=3306
+
+`DB_DATABASE`=examero
+
+`DB_USERNAME`=root
+
+`DB_PASSWORD`=root
+
+
+### To deploy this project run
+
+```bash
+  docker-compose exec app composer install
+```
+
+
+```bash
+ docker-compose exec app php artisan key:generate
+```
+
+To generate Key JWT
+
+```bash
+ docker-compose exec app php artisan jwt:secret
+```
+
+```bash
+  docker-compose exec app php artisan migrate:fresh --seed
+```
+
+## running server
+
+```bash
+  docker-compose exec app php artisan serve
+```
