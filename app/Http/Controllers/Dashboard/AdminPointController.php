@@ -9,11 +9,14 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminPointResource;
 use App\Http\Requests\Dashboard\AdminPoint\StoreAdminPointRequest;
+use App\Http\Trait\Paginatable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class AdminPointController extends Controller
 {
 
+    use Paginatable;
     public function index(Request $request)
     {
         // Fetch points data
@@ -28,9 +31,11 @@ class AdminPointController extends Controller
             DB::raw('SUM(CASE WHEN type = '. TypePoint::WARNING->value . ' THEN 1 ELSE 0 END) as warning_points')
         )
         ->groupBy('admin_id')
-        ->get();
+        ->paginate(Config::get('app.per_page'));
+        
         return response()->json([
-            'data' => $pointsData
+            'data' => $pointsData,
+            'meta' => $this->getPaginatable($pointsData)
         ]);
     }
 
@@ -52,5 +57,5 @@ class AdminPointController extends Controller
         return response()->json([],Response::HTTP_NO_CONTENT);
     }
 
-    
+
 }

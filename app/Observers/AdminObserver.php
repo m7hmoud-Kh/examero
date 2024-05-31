@@ -21,7 +21,7 @@ class AdminObserver
      */
     public function updating(Admin $admin): void
     {
-        if($admin->password){
+        if(request()->has('password')){
             $admin->password = Hash::make($admin->password);
         }
     }

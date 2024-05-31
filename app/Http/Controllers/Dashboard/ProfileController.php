@@ -44,7 +44,7 @@ class ProfileController extends Controller
     {
         $user = Admin::find(Auth::user('admin')->id);
         $user->update([
-            'password' => Hash::make($request->password),
+            'password' => $request->password
         ]);
         return response()->json([
             'message' => 'Password Change Successfully',
