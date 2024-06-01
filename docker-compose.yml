@@ -25,7 +25,6 @@ services:
     environment:
       MYSQL_DATABASE: examero
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
       MYSQL_PASSWORD:
     volumes:
       - mysql_data:/var/lib/mysql

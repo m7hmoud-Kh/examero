@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Teacher;
 
 return [
 
@@ -42,6 +43,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'teacher' => [
+            'driver' => 'jwt',
+            'provider' => 'teachers',
+        ],
         'admin' => [
             'driver' => 'jwt',
             'provider' => 'admins',
@@ -75,6 +80,10 @@ return [
             'driver' => 'eloquent',
             'model' => Admin::class,
         ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => Teacher::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
