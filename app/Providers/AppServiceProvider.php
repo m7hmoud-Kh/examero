@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\AdminNote;
+use App\Models\Teacher;
 use App\Observers\AdminNoteObserver;
 use App\Observers\AdminObserver;
+use App\Observers\TeacherObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         AdminNote::observe(AdminNoteObserver::class);
         Admin::observe(AdminObserver::class);
+        Teacher::observe(TeacherObserver::class);
     }
 }

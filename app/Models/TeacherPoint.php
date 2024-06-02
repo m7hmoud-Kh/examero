@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
-use App\Enums\AdminTypePoint;
-use App\Enums\TypePoint;
+use App\Enums\TeacherTypePoint;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminPoint extends Model
+class TeacherPoint extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
 
     protected $casts = [
-        'type' => AdminTypePoint::class,
+        'type' => TeacherTypePoint::class,
     ];
 
-    public function admin()
+    public function teacher()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(Teacher::class);
     }
-
 }

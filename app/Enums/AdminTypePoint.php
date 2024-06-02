@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 
-enum TypePoint: string {
+enum AdminTypePoint: string {
     case REWARD = '1';
     case PUNISHMENT = '2';
     case WARNING = '3';
