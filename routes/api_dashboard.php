@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
+use App\Http\Controllers\Dashboard\Exam\LessonController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ManagerController;
@@ -78,10 +79,19 @@ Route::middleware('auth:admin')->group(function(){
     Route::controller(UnitController::class)->prefix('units')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
-        Route::get('/selection/{unitId}','showUnitInSelection');
+        Route::get('/selection/{subjectId}','showUnitInSelection');
         Route::get('/{unitId}','show');
         Route::post('/{unitId}','update');
         Route::delete('/{unitId}','destory');
+    });
+
+    Route::controller(LessonController::class)->prefix('lessons')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection/{unitId}','showLessonInSelection');
+        Route::get('/{lessonId}','show');
+        Route::post('/{lessonId}','update');
+        Route::delete('/{lessonId}','destory');
     });
 
 });
