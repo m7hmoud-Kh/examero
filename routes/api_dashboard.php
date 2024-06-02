@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ManagerController;
@@ -93,6 +94,17 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('/{lessonId}','update');
         Route::delete('/{lessonId}','destory');
     });
+
+
+    Route::controller(QuestionTypeController::class)->prefix('questions-type')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection','showQuestionsTypeInSelection');
+        Route::get('/{questionTypeId}','show');
+        Route::post('/{questionTypeId}','update');
+        Route::delete('/{questionTypeId}','destory');
+    });
+
 
 });
 
