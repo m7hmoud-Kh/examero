@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
+use App\Http\Controllers\Dashboard\PlanController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\SupervisorController;
@@ -85,6 +86,16 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         Route::get('/','index');
         Route::post('/','store');
         Route::put('/','destory');
+    });
+
+    Route::controller(PlanController::class)->prefix('plans')->group(function(){
+        Route::get('/student','getStudentPlans');
+        Route::get('/teacher','getTeacherPlans');
+
+        Route::post('/','store');
+        Route::get('/{planId}','show');
+        Route::post('/{planId}','update');
+        Route::delete('/{planId}','destory');
     });
 
 });
