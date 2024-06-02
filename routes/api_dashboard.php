@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
+use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
 use App\Http\Controllers\Dashboard\PlanController;
@@ -72,6 +73,15 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/{subjectId}','show');
         Route::post('/{subjectId}','update');
         Route::delete('/{subjectId}','destory');
+    });
+
+    Route::controller(UnitController::class)->prefix('units')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection/{unitId}','showUnitInSelection');
+        Route::get('/{unitId}','show');
+        Route::post('/{unitId}','update');
+        Route::delete('/{unitId}','destory');
     });
 
 });

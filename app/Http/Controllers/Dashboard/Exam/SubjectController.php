@@ -8,14 +8,13 @@ use App\Http\Requests\Dashboard\Subject\UpdateSubjectRequest;
 use App\Http\Resources\SubjectResource;
 use App\Http\Trait\Paginatable;
 use App\Models\Subject;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 
 class SubjectController extends Controller
 {
     use Paginatable;
-
+    
     public function index()
     {
         $allSubjects = Subject::latest()
@@ -60,7 +59,7 @@ class SubjectController extends Controller
         $allSubject = Subject::whereHas('groups',function($q) use($groupId) {
             return $q->where('groups.id',$groupId);
         })->Status()->latest()->get(['id','name']);
-        
+
         return response()->json([
             'Status' => Response::HTTP_OK,
             'data' => $allSubject
