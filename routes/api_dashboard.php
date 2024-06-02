@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
+use App\Http\Controllers\Dashboard\Exam\GroupController;
+use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\SubjectController;
+use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
 use App\Http\Controllers\Dashboard\PlanController;
@@ -53,6 +57,43 @@ Route::middleware('auth:admin')->group(function(){
 
     });
 
+    Route::controller(GroupController::class)->prefix('groups')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection','showGroupInSelection');
+        Route::get('/{groupId}','show');
+        Route::post('/{groupId}','update');
+        Route::delete('/{groupId}','destory');
+    });
+
+
+    Route::controller(SubjectController::class)->prefix('subjects')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection/{groupId}','showSubjectInSelection');
+        Route::get('/{subjectId}','show');
+        Route::post('/{subjectId}','update');
+        Route::delete('/{subjectId}','destory');
+    });
+
+    Route::controller(UnitController::class)->prefix('units')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection/{subjectId}','showUnitInSelection');
+        Route::get('/{unitId}','show');
+        Route::post('/{unitId}','update');
+        Route::delete('/{unitId}','destory');
+    });
+
+    Route::controller(LessonController::class)->prefix('lessons')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/selection/{unitId}','showLessonInSelection');
+        Route::get('/{lessonId}','show');
+        Route::post('/{lessonId}','update');
+        Route::delete('/{lessonId}','destory');
+    });
+
 });
 
 
@@ -91,12 +132,12 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
     Route::controller(PlanController::class)->prefix('plans')->group(function(){
         Route::get('/student','getStudentPlans');
         Route::get('/teacher','getTeacherPlans');
-
         Route::post('/','store');
         Route::get('/{planId}','show');
         Route::post('/{planId}','update');
         Route::delete('/{planId}','destory');
     });
+
 
 });
 
