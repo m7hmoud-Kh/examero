@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\QuestionController;
 use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
@@ -104,6 +105,15 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('/{questionTypeId}','update');
         Route::delete('/{questionTypeId}','destory');
     });
+
+    Route::controller(QuestionController::class)->prefix('questions')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/{questionId}','show');
+        Route::post('/{questionId}','update');
+        Route::delete('/{questionId}','destory');
+    });
+
 
 
 });

@@ -44,6 +44,16 @@ return [
             'throw' => false,
         ],
 
+        'question' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Questions/',
+        ],
+
+        'option' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/Options/',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
