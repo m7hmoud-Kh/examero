@@ -37,6 +37,7 @@ Route::controller(ProfileController::class)->group(function(){
     });
 });
 
+
 Route::middleware('auth:admin')->group(function(){
     Route::controller(NotesController::class)->prefix('notes')->group(function(){
         Route::get('/','index');

@@ -31,6 +31,7 @@ class QuestionController extends Controller
             'options' => function($q){
             return $q->with('media');
         }])->paginate(Config::get('app.per_page'));
+
         return response()->json([
             'message' => 'Ok',
             'data' => QuestionResource::collection($allQuestions)
