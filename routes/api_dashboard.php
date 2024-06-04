@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');
+    Route::post('/sendmail','sendEmail');
+    Route::post('/verify-token','verifyToken');
+    Route::post('/reset-password','resetPassword');
+
 });
 
 Route::controller(ProfileController::class)->group(function(){

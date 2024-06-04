@@ -30,6 +30,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'frontAppUrl' => env('frontAppUrl','http://localhost:3000'),
 
     /*
     |--------------------------------------------------------------------------
