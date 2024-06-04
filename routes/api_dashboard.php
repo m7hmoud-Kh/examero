@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\QuestionController;
 use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('login','login');
+    Route::post('/sendmail','sendEmail');
+    Route::post('/verify-token','verifyToken');
+    Route::post('/reset-password','resetPassword');
+
 });
 
 Route::controller(ProfileController::class)->group(function(){
@@ -31,6 +36,7 @@ Route::controller(ProfileController::class)->group(function(){
         Route::post('/change-password','changePassword');
     });
 });
+
 
 Route::middleware('auth:admin')->group(function(){
     Route::controller(NotesController::class)->prefix('notes')->group(function(){
@@ -104,6 +110,15 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('/{questionTypeId}','update');
         Route::delete('/{questionTypeId}','destory');
     });
+
+    Route::controller(QuestionController::class)->prefix('questions')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/{questionId}','show');
+        Route::post('/{questionId}','update');
+        Route::delete('/{questionId}','destory');
+    });
+
 
 
 });

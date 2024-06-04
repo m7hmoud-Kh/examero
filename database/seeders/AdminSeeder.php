@@ -19,10 +19,7 @@ class AdminSeeder extends Seeder
         Role::create(['guard_name' => 'admin', 'name' => 'owner']);
         Role::create(['guard_name' => 'admin', 'name' => 'manager']);
         Role::create(['guard_name' => 'admin', 'name' => 'supervisor']);
-
-
         $faker = Factory::create();
-
         $owner = Admin::create([
             'first_name' => $faker->firstName(),
             'last_name' => $faker->lastName(),
@@ -33,6 +30,30 @@ class AdminSeeder extends Seeder
             'date_of_birth' => $faker->date()
         ]);
         $owner->assignRole('owner');
+        for ($i=0; $i < 10 ; $i++) {
+            $manager = Admin::create([
+                'first_name' => $faker->firstName(),
+                'last_name' => $faker->lastName(),
+                'email' => $faker->unique()->safeEmail(),
+                'password' => '123456asd',
+                'phone_number' => '01143124020',
+                'governorate' => 'assuit',
+                'date_of_birth' => $faker->date()
+            ]);
+            $manager->assignRole('manager');
+        }
+        for ($i=0; $i < 10 ; $i++) {
+            $supervisor = Admin::create([
+                'first_name' => $faker->firstName(),
+                'last_name' => $faker->lastName(),
+                'email' => $faker->unique()->safeEmail(),
+                'password' => '123456asd',
+                'phone_number' => '01143124020',
+                'governorate' => 'assuit',
+                'date_of_birth' => $faker->date()
+            ]);
+            $supervisor->assignRole('supervisor');
+        }
 
     }
 }
