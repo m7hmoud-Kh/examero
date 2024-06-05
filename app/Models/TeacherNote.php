@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Http\Trait\Statusable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Plan extends Model
+class TeacherNote extends Model
 {
-    use HasFactory, Statusable;
+    use HasFactory;
     protected $guarded = [];
 
 }

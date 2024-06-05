@@ -17,9 +17,9 @@ class UserObserver
     }
 
     /**
-     * Handle the User "updated" event.
+     * Handle the User "updating" event.
      */
-    public function updated(User $user): void
+    public function updating(User $user): void
     {
         if(request()->has('password')){
             $user->password = Hash::make($user->password);

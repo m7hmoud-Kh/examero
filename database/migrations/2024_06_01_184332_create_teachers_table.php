@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_block')->default(false);
             $table->integer('balance_points')->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('remember_token')->nullable();
             $table->timestamps();
         });
     }

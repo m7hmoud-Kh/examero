@@ -13,7 +13,6 @@ class TeacherObserver
     public function creating(Teacher $teacher): void
     {
         $teacher->password = Hash::make($teacher->password);
-
     }
 
     /**
