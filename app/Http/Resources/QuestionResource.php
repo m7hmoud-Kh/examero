@@ -19,6 +19,7 @@ class QuestionResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'point' => $this->point,
             'level' => Question::getLevelName($this->level),
             'for' => Question::getForWhomName($this->for),
             'semster' => Question::getSemsterName($this->semster),
