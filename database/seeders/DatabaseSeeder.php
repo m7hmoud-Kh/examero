@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
             QuestionTypeSeeder::class,
             TeacherSeeder::class,
             TeacherPointSeeder::class,
+            QuestionSeeder::class,
             PlanSeeder::class,
-            QuestionSeeder::class
-
+            UserSeeder::class,
+            StudentPlanSeeder::class
         ]);
     }
 }

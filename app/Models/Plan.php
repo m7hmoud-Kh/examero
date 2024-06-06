@@ -11,4 +11,14 @@ class Plan extends Model
     use HasFactory, Statusable;
     protected $guarded = [];
 
+    public function users()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'students_plans',
+            'plan_id',
+            'user_id'
+        )->withTimestamps()->withPivot(['exam_used','status']);
+    }
+
 }

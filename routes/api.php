@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Exam\GroupController;
+use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\SubjectController;
+use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Website\AuthStudentController;
 use App\Http\Controllers\Website\AuthTeacherController;
 use App\Http\Controllers\Website\HomeController;
+use App\Http\Controllers\Website\Student\ExamController;
+use App\Http\Controllers\Website\Student\PlanController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
@@ -78,5 +84,21 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
         Route::post('/update','update');
         Route::post('/change-password','changePassword');
     });
+
+    Route::controller(ExamController::class)->group(function(){
+        Route::post('/genrate-exam','generateExam')->middleware('StudentSubscribe');
+        Route::post('/submit-exam','submitExam');
+        Route::get('/exams','getAllExams');
+        Route::get('/exams-info','getSomeInfo');
+    });
+
+    Route::controller(PlanController::class)->prefix('plans')->group(function(){
+        Route::get('/','getAllSubscribePlan');
+    });
+    Route::get('groups/selection',[GroupController::class,'showGroupInSelection']);
+    Route::get('subjects/selection/{groupId}',[SubjectController::class,'showSubjectInSelection']);
+    Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
+    Route::get('lessons/selection/{unitId}',[LessonController::class,'showLessonInSelection']);
+
 
 });
