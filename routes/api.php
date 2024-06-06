@@ -4,7 +4,9 @@ use App\Http\Controllers\Website\AuthStudentController;
 use App\Http\Controllers\Website\AuthTeacherController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
+use App\Http\Controllers\Website\Student\StudentProfileController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
+use App\Http\Controllers\Website\Teacher\TeacherProfileController;
 use App\Models\TeacherNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +55,12 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::post('/{teacherNoteId}','update');
         Route::delete('/{teacherNoteId}','destory');
     });
+
+    Route::controller(TeacherProfileController::class)->group(function(){
+        Route::get('refresh','userProfile');
+        Route::post('/update','update');
+        Route::post('/change-password','changePassword');
+    });
 });
 
 Route::middleware('auth:api')->prefix('students')->group(function(){
@@ -64,4 +72,11 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
         Route::post('/{noteId}','update');
         Route::delete('/{noteId}','destory');
     });
+
+    Route::controller(StudentProfileController::class)->group(function(){
+        Route::get('refresh','userProfile');
+        Route::post('/update','update');
+        Route::post('/change-password','changePassword');
+    });
+
 });
