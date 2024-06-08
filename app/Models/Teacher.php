@@ -19,6 +19,20 @@ class Teacher extends Authenticatable implements JWTSubject
         'password'
     ];
 
+
+    public function plans()
+    {
+        return $this->belongsToMany(
+            Plan::class,
+            'teachers_plans',
+            'teacher_id',
+            'plan_id'
+        )
+        ->withTimestamps()
+        ->withPivot(['points_allow_to_use','status']);
+    }
+
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

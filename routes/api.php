@@ -11,6 +11,7 @@ use App\Http\Controllers\Website\Student\ExamController;
 use App\Http\Controllers\Website\Student\PlanController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
+use App\Http\Controllers\Website\Teacher\OpenEmisController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
 use App\Http\Controllers\Website\Teacher\TeacherProfileController;
 use App\Models\TeacherNote;
@@ -54,7 +55,8 @@ Route::controller(HomeController::class)->group(function(){
 
 
 Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
-    Route::controller(TeacherNoteController::class)->prefix('notes')->group(function(){
+    Route::controller(TeacherNoteController::class)->prefix('notes')
+    ->group(function(){
         Route::get('/','index');
         Route::post('/','store');
         Route::get('/{teacherNoteId}','show');
@@ -62,10 +64,20 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::delete('/{teacherNoteId}','destory');
     });
 
-    Route::controller(TeacherProfileController::class)->group(function(){
+    Route::controller(TeacherProfileController::class)
+    ->group(function(){
         Route::get('refresh','userProfile');
         Route::post('/update','update');
         Route::post('/change-password','changePassword');
+    });
+
+    Route::controller(OpenEmisController::class)->prefix('open-emis')
+    ->group(function(){
+        Route::get('/','index');
+        Route::get('/{openEmisId}','show');
+        Route::post('/','store');
+        Route::post('/{openEmisId}','update');
+        Route::delete('/{openEmisId}','destory');
     });
 });
 
