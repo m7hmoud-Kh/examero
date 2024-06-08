@@ -54,6 +54,11 @@ return [
             'root' => public_path() . '/assets/Options/',
         ],
 
+        'openEmis' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/OpenEmis/',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

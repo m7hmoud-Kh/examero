@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
+use App\Http\Controllers\Dashboard\OpenEmisController;
 use App\Http\Controllers\Dashboard\PlanController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
@@ -119,6 +120,14 @@ Route::middleware('auth:admin')->group(function(){
         Route::delete('/{questionId}','destory');
     });
 
+
+    Route::controller(OpenEmisController::class)->prefix('open-emis')
+    ->group(function(){
+        Route::get('/','index');
+        Route::get('/{openEmisId}','show');
+        Route::post('/{openEmisId}','update');
+        Route::put('/','destory');
+    });
 
 
 });
