@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckPointInExam;
 use App\Http\Middleware\VerifyIfStudentSubscribeInPlan;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -69,6 +70,8 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 
+        /** custom middleware */
         'StudentSubscribe' => VerifyIfStudentSubscribeInPlan::class,
+        'ExamBlanacePointCheck' => CheckPointInExam::class
     ];
 }

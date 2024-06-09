@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Exam;
+namespace App\Http\Controllers\Website\Teacher;
 
 use App\Enums\Question\QuestionStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Question\StoreQuestionRequest;
-use App\Http\Requests\Dashboard\Question\UpdateQuestionRequest;
+use App\Http\Requests\Website\Teacher\Question\StoreQuestionRequest;
+use App\Http\Requests\Website\Teacher\Question\UpdateQuestionRequest;
 use App\Http\Resources\QuestionResource;
 use App\Http\Trait\Imageable;
 use App\Http\Trait\Paginatable;
@@ -24,16 +24,15 @@ class QuestionController extends Controller
             'group','subject','unit','lesson',
             'questionType',
             'media',
-            'adminQuestion' => function($q){
-                return $q->with('admin');
-            },
             'teacherQuestion' => function($q){
-                return $q->with('teacher');
+                return $q->with('teacher')
+                ->where('teacher_id',Auth::guard('teacher')->user()->id);
             },
             'options' => function($q){
             return $q->with('media');
-            }
-        ])->paginate(Config::get('app.per_page'));
+        }])->whereHas('teacherQuestion' , function($q){
+            $q->where('teacher_id',Auth::guard('teacher')->user()->id);
+        })->paginate(Config::get('app.per_page'));
 
         return response()->json([
             'message' => 'Ok',
@@ -44,17 +43,15 @@ class QuestionController extends Controller
 
     public function store(StoreQuestionRequest $request)
     {
-        $question = Question::create(array_merge(
-            $request->except(['options','image']),
-            ['status' => QuestionStatus::ACCPTED->value]
-        ));
+        $question = Question::create($request->except(['options','image']));
+
         if($request->file('image')){
             $newImage = $this->insertImage($question->name,$request->image,Question::PATH_IMAGE);
             $this->insertImageInMeddiable($question,$newImage,'media');
         }
         $this->storeOptions($request->options,$question->id);
-        $question->adminQuestion()->create([
-            'admin_id' => Auth::guard('admin')->user()->id,
+        $question->teacherQuestion()->create([
+            'teacher_id' => Auth::guard('teacher')->user()->id,
             'question_id' => $question->id
         ]);
         return response()->json([
@@ -69,12 +66,11 @@ class QuestionController extends Controller
             'group','subject','unit','lesson',
             'questionType',
             'media',
-            'adminQuestion' => function($q){
-                return $q->with('admin');
-            },
             'options' => function($q){
             return $q->with('media');
-        }])->first();
+        }])->whereHas('teacherQuestion' , function($q){
+            $q->where('teacher_id',Auth::guard('teacher')->user()->id);
+        })->first();
 
         if($question){
             return response()->json([
@@ -92,9 +88,13 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request, $questionId)
     {
         //update
-        $question = Question::whereId($questionId)->first();
+        $question = Question::whereId($questionId)->whereHas('teacherQuestion' , function($q){
+            $q->where('teacher_id',Auth::guard('teacher')->user()->id);
+        })->first();
         if($question){
-            $question->update($request->except(['options','image']));
+            $question->update(array_merge($request->except(['options','image']),[
+                'status' => QuestionStatus::WAITING->value,
+            ]));
             if($request->file('image')){
                 //remove old Image
                 $image = $question->media()->first();
@@ -125,9 +125,9 @@ class QuestionController extends Controller
 
     public function destory($questionId)
     {
-        $question = Question::find($questionId);
-
-
+        $question = Question::whereHas('teacherQuestion' , function($q){
+            $q->where('teacher_id',Auth::guard('teacher')->user()->id);
+        })->find($questionId);
         if($question){
             if($question->media){
                 $image = $question->media()->first();
