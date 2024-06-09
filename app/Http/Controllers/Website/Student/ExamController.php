@@ -56,7 +56,7 @@ class ExamController extends Controller
             $allQuestions = collect();
             foreach ($request->filters_level as $level) {
             $questionsLevel =
-                Question::latest()->with(['media','options' => function($q){
+                Question::with(['media','options' => function($q){
                     return $q->with('media');
                 }])
                 ->where('status',QuestionStatus::ACCPTED->value)
@@ -64,8 +64,16 @@ class ExamController extends Controller
                 ->where('group_id',$request->group_id)
                 ->where('subject_id',$request->subject_id)
                 ->where('semster',$request->semster)
-                ->where('level',$level['level'])
-                ->inRandomOrder()
+                ->where('level',$level['level']);
+
+                if($request->unit_id){
+                    $questionsLevel = $questionsLevel->where('unit_id',$request->unit_id);
+                }
+                if($request->lesson_id){
+                    $questionsLevel = $questionsLevel->where('lesson_id',$request->lesson_id);
+                }
+
+                $questionsLevel = $questionsLevel->inRandomOrder()
                 ->take($level['number'])
                 ->get();
                 $allQuestions = $allQuestions->merge($questionsLevel);

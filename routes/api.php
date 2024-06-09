@@ -11,7 +11,9 @@ use App\Http\Controllers\Website\Student\ExamController;
 use App\Http\Controllers\Website\Student\PlanController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
+use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Website\Teacher\OpenEmisController;
+use App\Http\Controllers\Website\Teacher\QuestionController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
 use App\Http\Controllers\Website\Teacher\TeacherProfileController;
 use App\Models\TeacherNote;
@@ -79,6 +81,19 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::post('/{openEmisId}','update');
         Route::delete('/{openEmisId}','destory');
     });
+
+    Route::controller(QuestionController::class)->prefix('questions')->group(function(){
+        Route::get('/','index');
+        Route::post('/','store');
+        Route::get('/{questionId}','show');
+        Route::post('/{questionId}','update');
+        Route::delete('/{questionId}','destory');
+    });
+
+    Route::controller(TeacherExamController::class)->group(function(){
+        Route::post('genrate-exam','generateExam')->middleware('ExamBlanacePointCheck');
+    });
+
 });
 
 Route::middleware('auth:api')->prefix('students')->group(function(){

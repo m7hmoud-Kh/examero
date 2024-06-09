@@ -34,6 +34,7 @@ class QuestionResource extends JsonResource
             'media' => new MediaResource($this->whenLoaded('media')),
             'ImagePath' =>$this->whenLoaded('media',Question::PATH_IMAGE),
             'adminAuthor' => new AdminQuestionResource($this->whenLoaded('adminQuestion')),
+            'teacherAuthor' => new TeacherQuestionResource($this->whenLoaded('teacherQuestion')),
             'options' => OptionResource::collection($this->whenLoaded('options'))
         ];
     }

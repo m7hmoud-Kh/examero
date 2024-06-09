@@ -29,6 +29,11 @@ class Question extends Model
         return $this->hasOne(AdminQuestion::class);
     }
 
+    public function teacherQuestion()
+    {
+        return $this->hasOne(TeacherQuestion::class);
+    }
+
 
     public function group()
     {
