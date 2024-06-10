@@ -25,7 +25,7 @@ class TeacherProfileController extends Controller
 
     public function update(UpdateProfileTeacherRequest $request)
     {
-        return $this->profileAuthService->update($request,new Teacher(),'teacher');
+        return $this->profileAuthService->update($request,new Teacher(),'teacher',Teacher::DISK_NAME,Teacher::PATH_IMAGE);
     }
 
     public function changePassword(ChangePasswordRequest $request)

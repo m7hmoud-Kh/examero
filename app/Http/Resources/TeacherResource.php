@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,6 +25,8 @@ class TeacherResource extends JsonResource
             'date_of_birth' => $this->date_of_birth,
             'is_block' => $this->is_block,
             'balance_points' => $this->balance_points,
+            'media' => new MediaResource($this->media),
+            'ImagePath' => Teacher::PATH_IMAGE,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s')
         ];
     }

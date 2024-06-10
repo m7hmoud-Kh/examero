@@ -26,7 +26,7 @@ class StudentProfileController extends Controller
 
     public function update(UpdateProfileStudentRequest $request)
     {
-        return $this->profileAuthService->update($request,new User(),'api');
+        return $this->profileAuthService->update($request,new User(),'api',User::DISK_NAME,User::PATH_IMAGE);
     }
 
     public function changePassword(ChangePasswordRequest $request)

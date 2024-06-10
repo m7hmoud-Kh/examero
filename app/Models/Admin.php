@@ -19,7 +19,17 @@ class Admin extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password'
     ];
-    
+
+    public const PATH_IMAGE = '/assets/Admin/';
+    public const DISK_NAME = 'admin';
+
+
+    public function media()
+    {
+        return $this->morphOne(Media::class,'meddiable');
+    }
+
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -30,7 +30,8 @@ class UpdateAdminRequest extends FormRequest
             'email' => ['email',Rule::unique('admins')->ignore(Auth::user('admin')->id)],
             'phone_number' => ['string','digits:10'],
             'governorate' => ['string'],
-            'date_of_birth' => ['date']
+            'date_of_birth' => ['date'],
+            'image' => ['mimes:jpg,png,jpeg']
         ];
     }
 }
