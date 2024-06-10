@@ -20,18 +20,4 @@ class Plan extends Model
             'user_id'
         )->withTimestamps()->withPivot(['exam_used','status']);
     }
-
-    public function teachers()
-    {
-        return $this->belongsToMany(
-            Teacher::class,
-            'teachers_plans',
-            'plan_id',
-            'teacher_id'
-        )
-        ->withTimestamps()
-        ->withPivot(['points_allow_to_use','status']);
-    }
-
-
 }

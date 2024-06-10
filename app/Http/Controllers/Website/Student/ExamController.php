@@ -170,8 +170,4 @@ class ExamController extends Controller
         }
         return true;
     }
-
-
-
-
 }
