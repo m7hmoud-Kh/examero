@@ -54,6 +54,11 @@ return [
             'root' => public_path() . '/assets/Options/',
         ],
 
+        'teacher_exam' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/TeacherExam/',
+        ],
+
         'openEmis' => [
             'driver' => 'local',
             'root' => public_path() . '/assets/OpenEmis/',

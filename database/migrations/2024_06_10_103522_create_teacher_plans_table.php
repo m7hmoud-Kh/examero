@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teachers_plans', function (Blueprint $table) {
+        Schema::create('teacher_plans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('plan_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('teacher_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('plan_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->integer('points_allow_to_use');
+            $table->integer('points');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teachers_plans');
+        Schema::dropIfExists('teacher_plans');
     }
 };

@@ -9,4 +9,5 @@ enum TeacherPoint: int {
     case OPENEMIS = 20;
     case CERTIFICATE = 10;
     case SPECIFICATION=30;
+    case BASIC_QUESTION=25;
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\TeacherPoint;
-use App\Models\Teacher;
+use App\Models\TeacherPlan;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +18,26 @@ class CheckPointInExam
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $teacher = Teacher::whereId(Auth::guard('teacher')->user()->id)->first();
-        if($teacher->balance_points >= TeacherPoint::EXAM->value){
+        if($request->plan_id){
+            $teacher = TeacherPlan::
+            where('teacher_id',Auth::guard('teacher')->user()->id)
+            ->where('plan_id',$request->plan_id)
+            ->Status()
+            ->withSum('details','point')
+            ->first();
+
+            if($teacher && $teacher->points == $teacher->details_sum_point){
+                $teacher->update([
+                    'status' => false,
+                ]);
+            }
+
+            if($teacher && $teacher->points - $teacher->details_sum_point
+            >= TeacherPoint::EXAM->value)
+            {
+                return $next($request);
+            }
+        }elseif(Auth::guard('teacher')->user()->rewarded_point >= TeacherPoint::EXAM->value){
             return $next($request);
         }
         return response()->json([

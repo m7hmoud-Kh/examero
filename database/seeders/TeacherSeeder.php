@@ -25,7 +25,7 @@ class TeacherSeeder extends Seeder
                 'date_of_birth' => $faker->date(),
                 'phone_number' => '01143124020',
                 'is_block' => $faker->boolean(),
-                'balance_points' => $faker->randomNumber(2),
+                'rewarded_point' => $faker->randomNumber(2),
                 'email_verified_at' => $faker->dateTime(),
             ]);
         }

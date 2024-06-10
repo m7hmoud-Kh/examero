@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->date('date_of_birth');
             $table->boolean('is_block')->default(false);
-            $table->integer('balance_points')->default(0);
+            $table->decimal('rewarded_point')->default(0.0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();

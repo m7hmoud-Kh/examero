@@ -13,6 +13,7 @@ use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
 use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Website\Teacher\OpenEmisController;
+use App\Http\Controllers\Website\Teacher\PlanController as TeacherPlanController;
 use App\Http\Controllers\Website\Teacher\QuestionController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
 use App\Http\Controllers\Website\Teacher\TeacherProfileController;
@@ -91,7 +92,18 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
     });
 
     Route::controller(TeacherExamController::class)->group(function(){
-        Route::post('genrate-exam','generateExam')->middleware('ExamBlanacePointCheck');
+        Route::post('genrate-exam','generateExam')
+        ->middleware('ExamBlanacePointCheck');
+        Route::post('save-exam','saveExam')
+        ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
+        Route::post('store-exam-info','saveInfoExam');
+
+        Route::get('exams','getAllExam');
+    });
+
+    Route::controller(TeacherPlanController::class)->group(function(){
+        Route::post('/plan-subscribe','subscribeWithTeacher');
+        Route::get('/plans','index');
     });
 
 });
