@@ -11,13 +11,14 @@ use App\Http\Controllers\Website\Student\ExamController;
 use App\Http\Controllers\Website\Student\PlanController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
+use App\Http\Controllers\Website\Teacher\CertificateController;
 use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Website\Teacher\OpenEmisController;
 use App\Http\Controllers\Website\Teacher\PlanController as TeacherPlanController;
 use App\Http\Controllers\Website\Teacher\QuestionController;
+use App\Http\Controllers\Website\Teacher\SpecificationController;
 use App\Http\Controllers\Website\Teacher\TeacherNoteController;
 use App\Http\Controllers\Website\Teacher\TeacherProfileController;
-use App\Models\TeacherNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +79,7 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
     ->group(function(){
         Route::get('/','index');
         Route::get('/{openEmisId}','show');
-        Route::post('/','store');
+        Route::post('/','store')->middleware('CheckPointInOpenEmis');
         Route::post('/{openEmisId}','update');
         Route::delete('/{openEmisId}','destory');
     });
@@ -104,6 +105,14 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
     Route::controller(TeacherPlanController::class)->group(function(){
         Route::post('/plan-subscribe','subscribeWithTeacher');
         Route::get('/plans','index');
+    });
+
+    Route::controller(CertificateController::class)->group(function(){
+        Route::post('/certificate','makeCertificate')->middleware('CheckPointInCertificate',);
+    });
+
+    Route::controller(SpecificationController::class)->group(function(){
+        Route::post('/specification','makeSpecification')->middleware('CheckPointInSpecification',);
     });
 
 });
