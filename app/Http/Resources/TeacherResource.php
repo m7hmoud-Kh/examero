@@ -24,7 +24,7 @@ class TeacherResource extends JsonResource
             'phone_number' => $this->phone_number,
             'date_of_birth' => $this->date_of_birth,
             'is_block' => $this->is_block,
-            'balance_points' => $this->balance_points,
+            'rewarded_point' => $this->rewarded_point ,
             'media' => new MediaResource($this->media),
             'ImagePath' => Teacher::PATH_IMAGE,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s')

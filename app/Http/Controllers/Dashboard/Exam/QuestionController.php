@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Dashboard\Exam;
 
+
 use App\Enums\Question\QuestionStatus;
+use App\Events\BounsQuestionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Question\StoreQuestionRequest;
 use App\Http\Requests\Dashboard\Question\UpdateQuestionRequest;
@@ -72,6 +73,9 @@ class QuestionController extends Controller
             'adminQuestion' => function($q){
                 return $q->with('admin');
             },
+            'teacherQuestion' => function($q){
+                return $q->with('teacher');
+            },
             'options' => function($q){
             return $q->with('media');
         }])->first();
@@ -94,6 +98,10 @@ class QuestionController extends Controller
         //update
         $question = Question::whereId($questionId)->first();
         if($question){
+            if($request->status == QuestionStatus::ACCPTED->value &&$question->status == QuestionStatus::WAITING->value &&
+            $question->teacherQuestion){
+                event(new BounsQuestionEvent($question));
+            }
             $question->update($request->except(['options','image']));
             if($request->file('image')){
                 //remove old Image

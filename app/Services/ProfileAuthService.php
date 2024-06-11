@@ -13,9 +13,8 @@ class ProfileAuthService
 
     public function userProfile($guard)
     {
-        return response()->json([
-            'user' =>  Auth::guard($guard)->user()
-        ]);
+        return Auth::guard($guard)->user();
+
     }
 
     public function update($request, Model $model, $guard,$diskName,$pathImage)
