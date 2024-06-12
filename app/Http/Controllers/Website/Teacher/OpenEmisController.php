@@ -53,8 +53,9 @@ class OpenEmisController extends Controller
             ]);
         }
 
-        $openEmis = OpenEmis::create(array_merge($request->except('document','plan_id','teacher_plans_id'),[
-            'teacher_id' => Auth::user()->id
+        $openEmis = OpenEmis::create(array_merge($request->except('document','plan_id','teacher_plans_id','password_site','rewarded_point'),[
+            'teacher_id' => Auth::user()->id,
+            'password' => $request->password_site
         ]));
         $newImage = $this->insertImage($openEmis->user_name,$request->document,OpenEmis::PATH_IMAGE);
         $this->insertImageInMeddiable($openEmis,$newImage,'media');

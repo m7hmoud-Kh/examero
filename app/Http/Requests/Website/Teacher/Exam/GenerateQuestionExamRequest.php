@@ -31,7 +31,9 @@ class GenerateQuestionExamRequest extends FormRequest
             'semster' => ['required',Rule::in(1,2)],
             'lesson_id' => ['exists:lessons,id'],
             'unit_id' => ['exists:units,id','required_with:lesson_id'],
-            'count' => ['numeric']
+            'count' => ['numeric'],
+            'plan_id' => ['exists:plans,id'],
+            'teacher_id' => ['exists:teachers,id']
         ];
     }
 }

@@ -23,7 +23,7 @@ class UpdateOpenEmisRequest extends FormRequest
     {
         return [
             'user_name' => ['string'],
-            'password' => ['string'],
+            'password_site' => ['string'],
             'group' => ['string'],
             'subject' => ['string'],
             'phone_number' => ['digits:10'],

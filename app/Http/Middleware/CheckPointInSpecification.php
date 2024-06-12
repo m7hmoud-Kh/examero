@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\TeacherPoint;
+use App\Models\Teacher;
 use App\Models\TeacherPlan;
 use Closure;
 use Illuminate\Http\Request;
@@ -18,9 +19,16 @@ class CheckPointInSpecification
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(Auth::guard('teacher')->user()){
+            $request->merge(['teacher_id' => Auth::guard('teacher')->user()->id]);
+            $request->merge(['rewarded_point' => Auth::guard('teacher')->user()->rewarded_point]);
+        }else{
+            $teacher = Teacher::find($request->teacher_id);
+            $request->merge(['rewarded_point' => $teacher->rewarded_point]);
+        }
         if($request->plan_id){
             $teacher = TeacherPlan::
-            where('teacher_id',Auth::guard('teacher')->user()->id)
+            where('teacher_id',$request->teacher_id)
             ->where('plan_id',$request->plan_id)
             ->Status()
             ->withSum('details','point')
@@ -38,7 +46,7 @@ class CheckPointInSpecification
                 $request->merge(['teacher_plans_id'=>$teacher->id]);
                 return $next($request);
             }
-        }elseif(Auth::guard('teacher')->user()->rewarded_point >= TeacherPoint::SPECIFICATION->value){
+        }elseif($request->rewarded_point >= TeacherPoint::SPECIFICATION->value){
             return $next($request);
         }
         return response()->json([

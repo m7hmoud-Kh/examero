@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Website\Teacher\OpenEmis;
+namespace App\Http\Requests\Dashboard\OpenEmis;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,6 +28,7 @@ class StoreOpenEmisRequest extends FormRequest
             'subject' => ['required','string'],
             'phone_number' => ['required','digits:10'],
             'document' => ['required','mimes:jpg,png,jpeg,pdf'],
+            'teacher_id' => ['required','exists:teachers,id'],
             'plan_id' => ['exists:plans,id']
         ];
     }
