@@ -30,7 +30,8 @@ class UpdateProfileTeacherRequest extends FormRequest
             'email' => ['email',Rule::unique('teachers')->ignore(Auth::guard('teacher')->user()->id)],
             'password' => [Password::min(8)->letters()->numbers()],
             'phone_number' => ['string','digits:10'],
-            'date_of_birth' => ['date']
+            'date_of_birth' => ['date'],
+            'image' => ['mimes:png,jpg,jpeg']
         ];
     }
 }

@@ -30,7 +30,8 @@ class UpdateProfileStudentRequest extends FormRequest
             'email' => ['email',Rule::unique('users')->ignore(Auth::guard('api')->user()->id)],
             'password' => [Password::min(8)->letters()->numbers()],
             'phone_number' => ['string','digits:10'],
-            'date_of_birth' => ['date']
+            'date_of_birth' => ['date'],
+            'image' => ['mimes:jpg,png,jpeg']
         ];
     }
 }

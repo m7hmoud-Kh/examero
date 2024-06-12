@@ -7,6 +7,7 @@ use App\Http\Requests\Dashboard\Auth\ResetPasswordRequest;
 use App\Http\Requests\Dashboard\Auth\VerfiyTokenRequest;
 use App\Http\Requests\Dashboard\Student\StoreStudentRequest;
 use App\Http\Requests\Website\StudentLoginRequest;
+use App\Http\Requests\Website\StudentRegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\AuthService;
@@ -41,7 +42,7 @@ class AuthStudentController extends Controller
         }
     }
 
-    public function register(StoreStudentRequest $request)
+    public function register(StudentRegisterRequest $request)
     {
         $this->authService->register($request->validated(), new User());
         return response()->json([
@@ -77,7 +78,7 @@ class AuthStudentController extends Controller
         return $this->forgetPassword->resetPassword($request, new User());
     }
 
-    
+
 
     public function logout()
     {

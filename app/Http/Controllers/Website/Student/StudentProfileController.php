@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Student\UpdateStudentRequest;
 use App\Http\Requests\Website\Student\ChangePasswordRequest;
 use App\Http\Requests\Website\Student\UpdateProfileStudentRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\ProfileAuthService;
 use Illuminate\Http\Request;
@@ -21,12 +22,14 @@ class StudentProfileController extends Controller
 
     public function userProfile()
     {
-        return $this->profileAuthService->userProfile('api');
+        return response()->json([
+            'User' => new UserResource($this->profileAuthService->userProfile('api'))
+        ]);
     }
 
     public function update(UpdateProfileStudentRequest $request)
     {
-        return $this->profileAuthService->update($request,new User(),'api');
+        return $this->profileAuthService->update($request,new User(),'api',User::DISK_NAME,User::PATH_IMAGE);
     }
 
     public function changePassword(ChangePasswordRequest $request)

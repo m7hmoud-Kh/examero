@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\TeacherPoint;
 use App\Models\Plan;
 use Closure;
 use Illuminate\Http\Request;
@@ -25,7 +26,9 @@ class CheckAboutMaximumQuestion
                 return $next($request);
             }
         }elseif(
-            Auth::guard('teacher')->user()->rewarded_point >= count($request->questionIds)
+            Auth::guard('teacher')->user()->rewarded_point >= TeacherPoint::EXAM->value
+            &&
+            TeacherPoint::BASIC_QUESTION->value >= count($request->questionIds)
         ){
             return $next($request);
         }

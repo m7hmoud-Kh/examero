@@ -27,7 +27,8 @@ class StoreOpenEmisRequest extends FormRequest
             'group' => ['required','string'],
             'subject' => ['required','string'],
             'phone_number' => ['required','digits:10'],
-            'document' => ['required','mimes:jpg,png,jpeg,pdf']
+            'document' => ['required','mimes:jpg,png,jpeg,pdf'],
+            'plan_id' => ['exists:plans,id']
         ];
     }
 }

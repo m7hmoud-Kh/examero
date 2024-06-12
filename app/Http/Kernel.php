@@ -3,7 +3,10 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckAboutMaximumQuestion;
+use App\Http\Middleware\CheckPointInCertificate;
 use App\Http\Middleware\CheckPointInExam;
+use App\Http\Middleware\CheckPointInOpenEmis;
+use App\Http\Middleware\CheckPointInSpecification;
 use App\Http\Middleware\VerifyIfStudentSubscribeInPlan;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -74,6 +77,12 @@ class Kernel extends HttpKernel
         /** custom middleware */
         'StudentSubscribe' => VerifyIfStudentSubscribeInPlan::class,
         'ExamBlanacePointCheck' => CheckPointInExam::class,
-        'CheckAboutMaximumQuestion' => CheckAboutMaximumQuestion::class
+        'CheckAboutMaximumQuestion' => CheckAboutMaximumQuestion::class,
+        'CheckPointInCertificate' => CheckPointInCertificate::class,
+        'CheckPointInSpecification' => CheckPointInSpecification::class,
+        'CheckPointInOpenEmis' => CheckPointInOpenEmis::class,
+
+
+
     ];
 }

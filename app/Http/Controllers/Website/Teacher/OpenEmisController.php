@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Website\Teacher;
 
+use App\Enums\TeacherPoint;
+use App\Enums\TeacherServicesType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Website\Teacher\OpenEmis\StoreOpenEmisRequest;
 use App\Http\Requests\Website\Teacher\OpenEmis\UpdateOpenEmisRequest;
@@ -9,6 +11,8 @@ use App\Http\Resources\OpenEmisResource;
 use App\Http\Trait\Imageable;
 use App\Http\Trait\Paginatable;
 use App\Models\OpenEmis;
+use App\Models\Teacher;
+use App\Models\TeacherPlanDetails;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +39,21 @@ class OpenEmisController extends Controller
 
     public function store(StoreOpenEmisRequest $request)
     {
-        $openEmis = OpenEmis::create(array_merge($request->except('document'),[
+
+        if($request->plan_id){
+            TeacherPlanDetails::create([
+                'teacher_plans_id' => $request->teacher_plans_id,
+                'type' => TeacherServicesType::OPENEMIS->value,
+                'point' =>  TeacherPoint::OPENEMIS->value
+            ]);
+        }else{
+            $teacher = Teacher::find(Auth::guard('teacher')->user()->id);
+            $teacher->update([
+                'rewarded_point' => $teacher->rewarded_point - TeacherPoint::OPENEMIS->value
+            ]);
+        }
+
+        $openEmis = OpenEmis::create(array_merge($request->except('document','plan_id','teacher_plans_id'),[
             'teacher_id' => Auth::user()->id
         ]));
         $newImage = $this->insertImage($openEmis->user_name,$request->document,OpenEmis::PATH_IMAGE);

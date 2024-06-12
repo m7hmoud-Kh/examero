@@ -13,7 +13,7 @@ class TeacherPlan extends Model
 
     public function details()
     {
-        return $this->belongsTo(TeacherPlanDetails::class,'id','teacher_plans_id');
+        return $this->hasMany(TeacherPlanDetails::class,'teacher_plans_id','id');
     }
 
     public function plan()

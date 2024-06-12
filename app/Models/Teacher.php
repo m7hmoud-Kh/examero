@@ -18,6 +18,16 @@ class Teacher extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password'
     ];
+
+    public const PATH_IMAGE = '/assets/Teacher/';
+    public const DISK_NAME = 'teacher';
+
+
+    public function media()
+    {
+        return $this->morphOne(Media::class,'meddiable');
+    }
+
     
     public function getJWTIdentifier()
     {

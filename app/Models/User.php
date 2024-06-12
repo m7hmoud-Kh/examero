@@ -18,6 +18,15 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+    public const PATH_IMAGE = '/assets/Student/';
+    public const DISK_NAME = 'student';
+
+    public function media()
+    {
+        return $this->morphOne(Media::class,'meddiable');
+    }
+
+
     /**
      * The attributes that should be cast.
      *

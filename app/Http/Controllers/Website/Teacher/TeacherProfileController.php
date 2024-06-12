@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Teacher\UpdateTeacherRequest;
 use App\Http\Requests\Website\Teacher\ChangePasswordRequest;
 use App\Http\Requests\Website\Teacher\UpdateProfileTeacherRequest;
+use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use App\Services\ProfileAuthService;
 use Illuminate\Http\Request;
@@ -20,12 +21,14 @@ class TeacherProfileController extends Controller
 
     public function userProfile()
     {
-        return $this->profileAuthService->userProfile('teacher');
+        return response()->json([
+            'user' => new TeacherResource($this->profileAuthService->userProfile('teacher'))
+        ]);
     }
 
     public function update(UpdateProfileTeacherRequest $request)
     {
-        return $this->profileAuthService->update($request,new Teacher(),'teacher');
+        return $this->profileAuthService->update($request,new Teacher(),'teacher',Teacher::DISK_NAME,Teacher::PATH_IMAGE);
     }
 
     public function changePassword(ChangePasswordRequest $request)

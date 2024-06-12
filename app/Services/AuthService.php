@@ -16,11 +16,8 @@ class AuthService
 {
     public function register($request,Model $model)
     {
-        $instance =  $model::create($request);
         $token = $this->generateToken();
-        $instance->update([
-            'remember_token' => $token
-        ]);
+        $instance =  $model::create(array_merge($request,['remember_token'=>$token]));
         $this->sendMail($instance->email,$instance);
     }
 
@@ -40,7 +37,7 @@ class AuthService
 
     public function login($request, Model $model, $guard = 'api')
     {
-        if (!$token = Auth::guard($guard)->attempt($request->validated())) {
+        if (!$token = auth($guard)->attempt($request->validated())) {
             return [
                 'error' => 'Unauthorized',
                 'status' => 400,
