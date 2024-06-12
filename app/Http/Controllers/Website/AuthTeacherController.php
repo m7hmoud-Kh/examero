@@ -7,6 +7,7 @@ use App\Http\Requests\Dashboard\Auth\ResetPasswordRequest;
 use App\Http\Requests\Dashboard\Auth\VerfiyTokenRequest;
 use App\Http\Requests\Dashboard\Teacher\StoreTeacherRequest;
 use App\Http\Requests\Website\TeacherLoginRequest;
+use App\Http\Requests\Website\TeacherRegisterRequest;
 use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use App\Services\AuthService;
@@ -45,7 +46,7 @@ class AuthTeacherController extends Controller
         }
     }
 
-    public function register(StoreTeacherRequest $request)
+    public function register(TeacherRegisterRequest $request)
     {
         $this->authService->register($request->validated(),new Teacher());
         return response()->json([
@@ -80,7 +81,7 @@ class AuthTeacherController extends Controller
     {
         return $this->forgetPassword->resetPassword($request, new Teacher());
     }
-    
+
     public function logout()
     {
         $this->authService->logout('teacher');
