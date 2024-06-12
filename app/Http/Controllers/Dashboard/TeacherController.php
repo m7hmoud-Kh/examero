@@ -43,6 +43,18 @@ class TeacherController extends Controller
         }
     }
 
+    public function showTeacherInSelection()
+    {
+        $allTeacher = Teacher::where('is_block',false)
+        ->where('email_verified_at','!=',null)
+        ->latest()
+        ->get(['id','email']);
+        return response()->json([
+            'Status' => Response::HTTP_OK,
+            'data' => $allTeacher
+        ]);
+    }
+
 
     public function store(StoreTeacherRequest $request)
     {

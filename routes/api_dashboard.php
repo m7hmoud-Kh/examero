@@ -2,21 +2,25 @@
 
 use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
+use App\Http\Controllers\Dashboard\CertificateController;
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\LessonController;
 use App\Http\Controllers\Dashboard\Exam\QuestionController;
 use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
+use App\Http\Controllers\Dashboard\ExamServiceController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
 use App\Http\Controllers\Dashboard\OpenEmisController;
 use App\Http\Controllers\Dashboard\PlanController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\SpecificationController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\SupervisorController;
 use App\Http\Controllers\Dashboard\TeacherController;
 use App\Http\Controllers\Dashboard\TeacherPointController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,6 +55,7 @@ Route::middleware('auth:admin')->group(function(){
     Route::controller(TeacherController::class)->prefix('teachers')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
+        Route::get('/selection','showTeacherInSelection');
         Route::get('/{teacherId}','show');
         Route::post('/{teacherId}','update');
         Route::delete('/{teacherId}','destory');
@@ -130,6 +135,7 @@ Route::middleware('auth:admin')->group(function(){
     });
 
 
+
 });
 
 
@@ -174,6 +180,27 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         Route::delete('/{planId}','destory');
     });
 
+    Route::controller(CertificateController::class)->group(function(){
+        Route::post('/certificate','makeCertificate')->middleware('CheckPointInCertificate',);
+    });
+
+    Route::controller(OpenEmisController::class)->prefix('open-emis')
+    ->group(function(){
+        Route::post('/','store')->middleware('CheckPointInOpenEmis');
+    });
+
+    Route::controller(SpecificationController::class)->group(function(){
+        Route::post('/specification','makeSpecification')->middleware('CheckPointInSpecification',);
+    });
+
+    Route::controller(ExamServiceController::class)->group(function(){
+        Route::post('genrate-exam','generateExam')
+        ->middleware('ExamBlanacePointCheck');
+        Route::post('save-exam','saveExam')
+        ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
+        Route::post('store-exam-info','saveInfoExam');
+
+    });
 
 });
 

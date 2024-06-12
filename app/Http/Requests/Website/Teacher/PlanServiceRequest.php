@@ -22,7 +22,8 @@ class PlanServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plan_id' => ['exists:plans,id']
+            'plan_id' => ['exists:plans,id'],
+            'teacher_id' => ['exists:teachers,id']
         ];
     }
 }

@@ -27,7 +27,8 @@ class SavePdfsInfoRequest extends FormRequest
             'subject_id' => ['required_with:group_id','exists:subjects,id'],
             'semster' => ['required',Rule::in([1,2])],
             'mediaQuestion' => ['required','mimes:pdf'],
-            'mediaAnswer' => ['required','mimes:pdf']
+            'mediaAnswer' => ['required','mimes:pdf'],
+            'plan_id' => ['exists:plans,id'],
         ];
     }
 }

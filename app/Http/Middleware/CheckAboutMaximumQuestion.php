@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Enums\TeacherPoint;
 use App\Models\Plan;
+use App\Models\Teacher;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,14 @@ class CheckAboutMaximumQuestion
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(Auth::guard('teacher')->user()){
+            $request->merge(['teacher_id' => Auth::guard('teacher')->user()->id]);
+            $request->merge(['rewarded_point' => Auth::guard('teacher')->user()->rewarded_point]);
+        }else{
+            $teacher = Teacher::find($request->teacher_id);
+            $request->merge(['rewarded_point' => $teacher->rewarded_point]);
+        }
+
         if($request->plan_id)
         {
             $plan = Plan::whereId($request->plan_id)->Status()->where('for_student',false)->first();
@@ -26,7 +35,7 @@ class CheckAboutMaximumQuestion
                 return $next($request);
             }
         }elseif(
-            Auth::guard('teacher')->user()->rewarded_point >= TeacherPoint::EXAM->value
+            $request->rewarded_point >= TeacherPoint::EXAM->value
             &&
             TeacherPoint::BASIC_QUESTION->value >= count($request->questionIds)
         ){
