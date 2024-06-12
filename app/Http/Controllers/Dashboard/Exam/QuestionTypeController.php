@@ -8,7 +8,6 @@ use App\Http\Requests\Dashboard\QuestionType\UpdateQuestionTypeRequest;
 use App\Http\Resources\QuestionTypeResource;
 use App\Http\Trait\Paginatable;
 use App\Models\QuestionType;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 

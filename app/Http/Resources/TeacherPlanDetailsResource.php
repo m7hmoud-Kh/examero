@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\TeacherPlanDetails;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TeacherPlanResource extends JsonResource
+class TeacherPlanDetailsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +17,8 @@ class TeacherPlanResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'teacher' => new TeacherResource($this->whenLoaded('teacher')),
-            'plan' => new PlanResource($this->whenLoaded('plan')),
-            'details' => TeacherPlanDetailsResource::collection($this->whenLoaded('details')),
-            'points' => $this->points,
-            'status' => $this->status,
+            'point' => $this->point,
+            'type' => TeacherPlanDetails::getTypeName($this->type),
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s A')
         ];
     }

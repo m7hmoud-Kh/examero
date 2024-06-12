@@ -26,6 +26,15 @@ class PlanController extends Controller
         ]);
     }
 
+    public function getAllPlansSubscibewithDetailsPoints()
+    {
+        $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with('plan','details')->get();
+        return response()->json([
+            'message' => "Ok",
+            'data' => TeacherPlanResource::collection($allTeacherPlans)
+        ]);
+    }
+
     //todo must be paid with payment method with price in plan
     //todo must be assign number of question with point in plan
     public function subscribeWithTeacher(StorePlanSubscribeRequest $request)

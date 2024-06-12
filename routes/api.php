@@ -105,6 +105,7 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
     Route::controller(TeacherPlanController::class)->group(function(){
         Route::post('/plan-subscribe','subscribeWithTeacher');
         Route::get('/plans','index');
+        Route::get('/plans/details','getAllPlansSubscibewithDetailsPoints');
     });
 
     Route::controller(CertificateController::class)->group(function(){
