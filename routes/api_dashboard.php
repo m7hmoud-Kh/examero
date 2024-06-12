@@ -55,6 +55,7 @@ Route::middleware('auth:admin')->group(function(){
     Route::controller(TeacherController::class)->prefix('teachers')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
+        Route::get('/selection','showTeacherInSelection');
         Route::get('/{teacherId}','show');
         Route::post('/{teacherId}','update');
         Route::delete('/{teacherId}','destory');
