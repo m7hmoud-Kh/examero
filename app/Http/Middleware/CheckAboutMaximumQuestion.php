@@ -43,7 +43,7 @@ class CheckAboutMaximumQuestion
         }
         return response()->json([
             'message' => 'You exceed limitation in questions'
-        ],Response::HTTP_UNAUTHORIZED);
+        ],Response::HTTP_BAD_REQUEST);
 
     }
 }

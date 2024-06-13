@@ -36,7 +36,7 @@ class VerifyIfStudentSubscribeInPlan
 
         return response()->json([
             'message' => 'May be you finish all Exam in this plan'
-        ],Response::HTTP_UNAUTHORIZED);
+        ],Response::HTTP_BAD_REQUEST);
 
     }
 }

@@ -6,17 +6,40 @@ use App\Enums\Question\QuestionForWhom;
 use App\Enums\Question\QuestionLevel;
 use App\Enums\Question\QuestionSemster;
 use App\Enums\Question\QuestionStatus;
+use App\Http\Trait\ActivityLogger;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Question extends Model
 {
-    use HasFactory;
+    use HasFactory,LogsActivity, ActivityLogger ;
 
     public const PATH_IMAGE = '/assets/Questions/';
     public const DISK_NAME = 'question';
 
     protected $guarded = [];
+
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        if(Auth::guard('admin')->user()){
+            $causer = Admin::role(['manager','supervisor','owner'])->find(Auth::guard('admin')->user()->id);
+            $activity->description = "Question has been {$eventName} by " . ($causer ? $causer->email : 'an unknown user');
+            $activity->properties = $activity->properties->merge([
+                'causer_email'=>$causer ? $causer->email : 'unknown',
+                'fullName' =>
+                $causer ? $causer->first_name . ' ' . $causer->last_name : 'unkown',
+                'role_user' => $causer ? $causer->roles[0]->name : 'unknown',
+                'event' => $activity->event,
+            ]);
+        }else{
+            $activity->description = 'null';
+        }
+    }
+
 
     public function media()
     {

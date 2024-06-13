@@ -51,6 +51,6 @@ class CheckPointInExam
         }
         return response()->json([
             'message' => "Your Balance Points is less than " . TeacherPoint::EXAM->value,
-        ],Response::HTTP_UNAUTHORIZED);
+        ],Response::HTTP_BAD_REQUEST);
     }
 }

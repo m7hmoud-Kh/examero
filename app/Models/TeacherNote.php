@@ -9,5 +9,4 @@ class TeacherNote extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
 }

@@ -21,7 +21,7 @@ class CheckPointInOpenEmis
      */
     public function handle(Request $request, Closure $next): Response
     {
-       
+
         if(Auth::guard('teacher')->user()){
             $request->merge(['teacher_id' => Auth::guard('teacher')->user()->id]);
             $request->merge(['rewarded_point' => Auth::guard('teacher')->user()->rewarded_point]);
@@ -55,6 +55,6 @@ class CheckPointInOpenEmis
         }
         return response()->json([
             'message' => "Your Balance Points is less than " . TeacherPoint::OPENEMIS->value,
-        ],Response::HTTP_UNAUTHORIZED);
+        ],Response::HTTP_BAD_REQUEST);
     }
 }

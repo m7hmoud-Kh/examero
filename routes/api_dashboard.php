@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\AdminPointController;
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\CertificateController;
@@ -44,6 +45,9 @@ Route::controller(ProfileController::class)->group(function(){
 
 
 Route::middleware('auth:admin')->group(function(){
+
+
+
     Route::controller(NotesController::class)->prefix('notes')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
@@ -148,6 +152,11 @@ Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
         Route::post('/{supervisorId}','update');
         Route::delete('/{supervisorId}','destory');
     });
+
+    Route::controller(ActivityLogController::class)->prefix('activity')->group(function(){
+        Route::get('/manager','getActivityForManager');
+    });
+
 });
 
 Route::middleware(['auth:admin','role:owner'])->group(function(){
@@ -174,6 +183,7 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
     Route::controller(PlanController::class)->prefix('plans')->group(function(){
         Route::get('/student','getStudentPlans');
         Route::get('/teacher','getTeacherPlans');
+        Route::get('/{teacherId}/teacher','getAllPlanSubscribeByTeacherId');
         Route::post('/','store');
         Route::get('/{planId}','show');
         Route::post('/{planId}','update');
@@ -199,7 +209,10 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         Route::post('save-exam','saveExam')
         ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
         Route::post('store-exam-info','saveInfoExam');
+    });
 
+    Route::controller(ActivityLogController::class)->prefix('activity')->group(function(){
+        Route::get('/','index');
     });
 
 });
