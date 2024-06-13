@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Plan\StorePlanRequest;
 use App\Http\Requests\Dashboard\Plan\UpdatePlanRequest;
+use App\Http\Requests\Website\Teacher\PlanServiceRequest;
 use App\Http\Resources\PlanResource;
+use App\Http\Resources\TeacherPlanResource;
 use App\Http\Trait\Paginatable;
 use App\Models\Plan;
+use App\Models\TeacherPlan;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 
@@ -65,6 +69,24 @@ class PlanController extends Controller
                 'Message' => 'Not Found'
             ],Response::HTTP_BAD_REQUEST);
         }
+    }
+
+
+    public function getAllPlanSubscribeByTeacherId($teacherId)
+    {
+
+        $allTeacherPlans = TeacherPlan::where('teacher_id',$teacherId)->with('plan')->Status()->get();
+        if($allTeacherPlans){
+            return response()->json([
+                'message' => "Ok",
+                'data' => TeacherPlanResource::collection($allTeacherPlans)
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'Not Found'
+            ],Response::HTTP_NOT_FOUND);
+        }
+
     }
 
     public function update(UpdatePlanRequest $request, $planId)

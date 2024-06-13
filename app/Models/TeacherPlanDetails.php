@@ -11,6 +11,7 @@ class TeacherPlanDetails extends Model
     use HasFactory;
     protected $guarded = [];
 
+    
 
     public static function getTypeName($status)
     {
