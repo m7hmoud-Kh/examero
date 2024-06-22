@@ -23,4 +23,5 @@ class PlanController extends Controller
             'plans' => $plans
         ],Response::HTTP_OK);
     }
+
 }

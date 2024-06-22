@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('plan_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('teacher_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('points');
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
+            $table->string('payment_id');
+            $table->enum('type',['paypal','visa']);
             $table->timestamps();
         });
     }

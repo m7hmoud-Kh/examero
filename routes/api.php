@@ -8,12 +8,14 @@ use App\Http\Controllers\Website\AuthStudentController;
 use App\Http\Controllers\Website\AuthTeacherController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\Student\ExamController;
+use App\Http\Controllers\Website\Student\PaypalPaymentController;
 use App\Http\Controllers\Website\Student\PlanController;
 use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
 use App\Http\Controllers\Website\Teacher\CertificateController;
 use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Website\Teacher\OpenEmisController;
+use App\Http\Controllers\Website\Teacher\PaypalPaymentController as TeacherPaypalPaymentController;
 use App\Http\Controllers\Website\Teacher\PlanController as TeacherPlanController;
 use App\Http\Controllers\Website\Teacher\QuestionController;
 use App\Http\Controllers\Website\Teacher\SpecificationController;
@@ -116,6 +118,10 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::post('/specification','makeSpecification')->middleware('CheckPointInSpecification',);
     });
 
+    Route::controller(TeacherPaypalPaymentController::class)->prefix('payments')->group(function(){
+        Route::post('/pay-with-paypal','payWithPaypalTeacher')->middleware('CheckPlanForTeacher');
+    });
+
 });
 
 Route::middleware('auth:api')->prefix('students')->group(function(){
@@ -149,5 +155,11 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
     Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
     Route::get('lessons/selection/{unitId}',[LessonController::class,'showLessonInSelection']);
 
-
+    Route::controller(PaypalPaymentController::class)->prefix('payments')->group(function(){
+        Route::post('/pay-with-paypal','payWithPaypalStudent')->middleware('CheckPlanForStudent');
+    });
 });
+// Route::get('/payments/verify/{payment?}',[PaypalPaymentController::class,'verifyWithPaypal'])->name('payment-verify');
+// Route::get('/payments/verify/{payment?}',[PaypalPaymentController::class, 'verifyWithPaypal']);
+
+Route::get('/payments/verify/{payment?}',[PaypalPaymentController::class,'payment_verify'])->name('payment-verify');

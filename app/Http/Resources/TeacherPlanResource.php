@@ -21,6 +21,8 @@ class TeacherPlanResource extends JsonResource
             'details' => TeacherPlanDetailsResource::collection($this->whenLoaded('details')),
             'points' => $this->points,
             'status' => $this->status,
+            'payment_id' => $this->payment_id,
+            'type' => $this->type,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s A')
         ];
     }

@@ -15,11 +15,12 @@ class StudentPlanSeeder extends Seeder
      */
     public function run(): void
     {
-        $allPlans = Plan::where('for_student',true)->get();
-        User::all()->each(function ($user) use ($allPlans) {
-            $user->plans()->attach(
-                $allPlans->random(rand(1, 2))->pluck('id')->toArray()
-            );
-        });
+        //test
+        // $allPlans = Plan::where('for_student',true)->get();
+        // User::all()->each(function ($user) use ($allPlans) {
+        //     $user->plans()->attach(
+        //         $allPlans->random(rand(1, 2))->pluck('id')->toArray()
+        //     );
+        // });
     }
 }

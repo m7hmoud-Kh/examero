@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b21036384dcc82487ee1386dc5dbaf5a",
+    "content-hash": "d55029d05515ae3f2cb4efdb6a2959d9",
     "packages": [
         {
             "name": "brick/math",
@@ -2125,6 +2125,69 @@
             "time": "2024-04-12T21:02:21+00:00"
         },
         {
+            "name": "nafezly/payments",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nafezly/payments.git",
+                "reference": "74cd95cc78fa7ae5517557b081104def2c1d2eda"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nafezly/payments/zipball/74cd95cc78fa7ae5517557b081104def2c1d2eda",
+                "reference": "74cd95cc78fa7ae5517557b081104def2c1d2eda",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "laravel/framework": ">=6.0",
+                "paypal/paypal-checkout-sdk": "1.0.2",
+                "php": ">=7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nafezly\\Payments\\NafezlyPaymentsServiceProvider"
+                    ],
+                    "aliases": {
+                        "NafezlyPayments": "Nafezly\\Payments\\Facades"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nafezly\\Payments\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "nafezly.com",
+                    "email": "nafezly.com@gmail.com"
+                }
+            ],
+            "description": "Payment helper for Paypal, Paymob, Kashier, Hyperpay and Fawry",
+            "keywords": [
+                "fawry",
+                "hyperpay",
+                "kashier",
+                "online payments",
+                "paymob",
+                "paypal"
+            ],
+            "support": {
+                "issues": "https://github.com/Nafezly/payments/issues",
+                "source": "https://github.com/Nafezly/payments/tree/master"
+            },
+            "time": "2024-04-27T11:01:44+00:00"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "2.72.3",
             "source": {
@@ -2522,6 +2585,102 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "paypal/paypal-checkout-sdk",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/Checkout-PHP-SDK.git",
+                "reference": "19992ce7051ff9e47e643f28abb8cc1b3e5f1812"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/Checkout-PHP-SDK/zipball/19992ce7051ff9e47e643f28abb8cc1b3e5f1812",
+                "reference": "19992ce7051ff9e47e643f28abb8cc1b3e5f1812",
+                "shasum": ""
+            },
+            "require": {
+                "paypal/paypalhttp": "1.0.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sample\\": "samples/",
+                    "PayPalCheckoutSdk\\": "lib/PayPalCheckoutSdk"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "https://github.com/paypal/Checkout-PHP-SDK/blob/master/LICENSE"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/Checkout-PHP-SDK/contributors"
+                }
+            ],
+            "description": "PayPal's PHP SDK for Checkout REST APIs",
+            "homepage": "http://github.com/paypal/Checkout-PHP-SDK/",
+            "keywords": [
+                "checkout",
+                "orders",
+                "payments",
+                "paypal",
+                "rest",
+                "sdk"
+            ],
+            "support": {
+                "source": "https://github.com/paypal/Checkout-PHP-SDK/tree/1.0.2"
+            },
+            "abandoned": true,
+            "time": "2021-09-21T20:57:38+00:00"
+        },
+        {
+            "name": "paypal/paypalhttp",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/paypalhttp_php.git",
+                "reference": "7b09c89c80828e842c79230e7f156b61fbb68d25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/paypalhttp_php/zipball/7b09c89c80828e842c79230e7f156b61fbb68d25",
+                "reference": "7b09c89c80828e842c79230e7f156b61fbb68d25",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "wiremock-php/wiremock-php": "1.43.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PayPalHttp\\": "lib/PayPalHttp"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/paypalhttp_php/contributors"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/paypal/paypalhttp_php/issues",
+                "source": "https://github.com/paypal/paypalhttp_php/tree/1.0.1"
+            },
+            "time": "2021-09-14T21:35:26+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -8621,7 +8780,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "nafezly/payments": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -67,6 +67,6 @@ class User extends Authenticatable implements JWTSubject
             'students_plans',
             'user_id',
             'plan_id'
-        )->withTimestamps()->withPivot(['exam_used','status']);
+        )->withTimestamps()->withPivot(['exam_used','status','payment_id','type']);
     }
 }
