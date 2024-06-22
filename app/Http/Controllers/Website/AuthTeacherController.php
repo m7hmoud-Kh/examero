@@ -21,6 +21,8 @@ class AuthTeacherController extends Controller
 
     public $authService;
     public $forgetPassword;
+    public const TEACHERURL = 'verify-account-teacher';
+
     public function __construct(
         AuthService $authService,
         ForgetPassword $forgetPassword
@@ -48,7 +50,7 @@ class AuthTeacherController extends Controller
 
     public function register(TeacherRegisterRequest $request)
     {
-        $this->authService->register($request->validated(),new Teacher());
+        $this->authService->register($request->validated(),new Teacher(), $this::TEACHERURL);
         return response()->json([
             'message' => 'Teacher Register Successfully, please Check Your Email For Verification',
         ], Response::HTTP_CREATED);
