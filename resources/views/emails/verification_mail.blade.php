@@ -48,7 +48,7 @@
             <h2>Email Verification</h2>
             <p>Hello, {{$emailData->first_name}}  {{$emailData->last_name}}</p>
             <p>Welcome to our platform! Please click the button below to verify your email address:</p>
-            <p><a  href="{{config('app.frontAppUrl')}}/verify-account?token={{$emailData->remember_token}}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a></p>
+            <p><a  href="{{config('app.frontAppUrl')}}/{{$url}}?token={{$emailData->remember_token}}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none;">Verify Email</a></p>
             <p>If you didn't create an account with us, you can safely ignore this email.</p>
             <p>Thank you,</p>
             <p>Examero</p>

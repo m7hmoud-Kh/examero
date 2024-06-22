@@ -14,11 +14,11 @@ use Illuminate\Support\Str;
 
 class AuthService
 {
-    public function register($request,Model $model)
+    public function register($request,Model $model, $url)
     {
         $token = $this->generateToken();
         $instance =  $model::create(array_merge($request,['remember_token'=>$token]));
-        $this->sendMail($instance->email,$instance);
+        $this->sendMail($instance->email,$instance, $url);
     }
 
     public function verifyAccount(Model $model,$token)
@@ -79,8 +79,8 @@ class AuthService
         return Str::random(60);
     }
 
-    private function sendMail($email,$instance)
+    private function sendMail($email,$instance, $url)
     {
-        Mail::to($email)->send(new MailVerification($instance));
+        Mail::to($email)->send(new MailVerification($instance, $url));
     }
 }

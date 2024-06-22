@@ -19,6 +19,7 @@ class AuthStudentController extends Controller
 {
     public $authService;
     public $forgetPassword;
+    public const STUDENTURL = 'verify-account-student';
     public function __construct(AuthService $authService, ForgetPassword $forgetPassword)
     {
         $this->authService =  $authService;
@@ -44,7 +45,7 @@ class AuthStudentController extends Controller
 
     public function register(StudentRegisterRequest $request)
     {
-        $this->authService->register($request->validated(), new User());
+        $this->authService->register($request->validated(), new User(),$this::STUDENTURL);
         return response()->json([
             'message' => 'Student Register Successfully, please Check Your Email For Verification',
         ], Response::HTTP_CREATED);
