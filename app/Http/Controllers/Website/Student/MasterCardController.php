@@ -4,16 +4,14 @@ namespace App\Http\Controllers\Website\Student;
 
 use App\Enums\PaymentType;
 use App\Http\Controllers\Controller;
-use App\Models\Plan;
-use App\Models\User;
 use App\Services\PaymentStudentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Nafezly\Payments\Classes\PayPalPayment;
+use Nafezly\Payments\Classes\PaymobPayment;
 
-class PaypalPaymentController extends Controller
+class MasterCardController extends Controller
 {
+
     public $paymentService;
 
     public function __construct(PaymentStudentService $paymentService)
@@ -21,23 +19,28 @@ class PaypalPaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
-    public function payWithPaypalStudent(Request $request){
-        $payment = new PayPalPayment();
+    public function payWithStudentPaymob(Request $request){
+        $payment = new PaymobPayment();
         $response = $payment
+        ->setUserFirstName(Auth::user()->first_name)
+        ->setUserLastName(Auth::user()->last_name)
+        ->setUserEmail(Auth::user()->email)
+        ->setUserPhone(Auth::user()->phone_number)
         ->setAmount($request->amount)
         ->pay();
 
-        $this->paymentService->storeStudentPlan($request->plan_id,$response['payment_id'], PaymentType::PAYAPL->value);
+        $this->paymentService->storeStudentPlan($request->plan_id,$response['payment_id'], PaymentType::VISA->value);
 
         return response()->json([
             'payment_id' => $response['payment_id'],
             'redirect_url' => $response['redirect_url'],
             'message' => 'Student subscribe with payment Successfully'
         ]);
+
     }
 
-    public function payment_verify(Request $request){
-        $payment = new PayPalPayment();
+    public function paymob_verify(Request $request){
+        $payment = new PaymobPayment();
         $response = $payment->verify($request);
 
         if($response['success']){
@@ -46,21 +49,12 @@ class PaypalPaymentController extends Controller
             }elseif(Auth::user()){
                 $this->paymentService->verifyStudentPlan($response['payment_id']);
             }
-            return response()->json([
-                'success' => $response['success'],
-                'payment_id' => $response['payment_id'],
-                'message' => $response['message']
-            ]);
         }
-        
+
         return response()->json([
             'success' => $response['success'],
             'payment_id' => $response['payment_id'],
             'message' => $response['message']
         ]);
-
-
-        // return to page website after verify account
-        // return Redirect::to(config::get('app.frontAppUrl')."/payment/success");
     }
 }
