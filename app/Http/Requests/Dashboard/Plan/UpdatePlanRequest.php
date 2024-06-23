@@ -28,7 +28,8 @@ class UpdatePlanRequest extends FormRequest
             'price' => ['numeric'],
             'allow_exam' => ['numeric'],
             'allow_question' => ['numeric'],
-            'for_student' => ['boolean']
+            'for_student' => ['boolean'],
+            'status' => ['boolean']
         ];
     }
 }
