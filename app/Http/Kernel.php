@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckAboutMaximumQuestion;
+use App\Http\Middleware\CheckPlanForStudentMiddleware;
+use App\Http\Middleware\CheckPlanForTeacherMiddleware;
 use App\Http\Middleware\CheckPointInCertificate;
 use App\Http\Middleware\CheckPointInExam;
 use App\Http\Middleware\CheckPointInOpenEmis;
@@ -81,8 +83,8 @@ class Kernel extends HttpKernel
         'CheckPointInCertificate' => CheckPointInCertificate::class,
         'CheckPointInSpecification' => CheckPointInSpecification::class,
         'CheckPointInOpenEmis' => CheckPointInOpenEmis::class,
-
-
+        'CheckPlanForStudent' => CheckPlanForStudentMiddleware::class,
+        'CheckPlanForTeacher' =>  CheckPlanForTeacherMiddleware::class
 
     ];
 }

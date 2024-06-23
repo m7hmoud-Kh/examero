@@ -33,6 +33,6 @@ class Plan extends Model
             'students_plans',
             'plan_id',
             'user_id'
-        )->withTimestamps()->withPivot(['exam_used','status']);
+        )->withTimestamps()->withPivot(['exam_used','status','payment_id','type']);
     }
 }
