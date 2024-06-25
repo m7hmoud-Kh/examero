@@ -17,7 +17,7 @@ class GroupResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => $this->status ? 'Active' : 'Unactive'
+            'status' => $this->status
         ];
     }
 }
