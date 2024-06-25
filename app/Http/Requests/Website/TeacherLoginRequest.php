@@ -26,4 +26,18 @@ class TeacherLoginRequest extends FormRequest
             'password' => ['required','string']
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'email.required' =>
+            __('validation.required',['attribute' =>  __('validation.attributes.email')]),
+            'email.email' => __('validation.email'),
+            'email.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.email')]),
+            "password.required" =>
+            __('validation.required',['attribute' => __('validation.attributes.password')]),
+        ];
+    }
 }

@@ -25,4 +25,13 @@ class StoreGroupRequest extends FormRequest
             'name' => ['required','string','unique:groups'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => __('validation.required',['attribute' => __('validation.attributes.group_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.group_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.group_name')]),
+        ];
+    }
 }

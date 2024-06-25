@@ -28,4 +28,17 @@ class UpdateLessonRequest extends FormRequest
             'unit_id' => ['exists:units,id'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.lesson_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.lesson_name')]),
+
+            'status.boolean' => __('validation.boolean',['attribute' => __('validation.attributes.status')]),
+            'unit_id.exists' => __('validation.exists',['attribute' => __('validation.attributes.unit_id')]),
+
+
+        ];
+    }
 }

@@ -25,4 +25,15 @@ class StorePlanSubscribeRequest extends FormRequest
             'plan_id' => ['required','exists:plans,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'plan_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.plan_id')]),
+
+            'plan_id.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.plan_id')]),
+        ];
+    }
 }

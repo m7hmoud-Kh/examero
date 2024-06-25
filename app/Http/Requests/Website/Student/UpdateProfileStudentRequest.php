@@ -28,10 +28,33 @@ class UpdateProfileStudentRequest extends FormRequest
             'first_name' => ['string'],
             'last_name' => ['string'],
             'email' => ['email',Rule::unique('users')->ignore(Auth::guard('api')->user()->id)],
-            'password' => [Password::min(8)->letters()->numbers()],
             'phone_number' => ['string','digits:10'],
             'date_of_birth' => ['date'],
             'image' => ['mimes:jpg,png,jpeg']
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+            'first_name.string' => __('validation.string',['attribute' => __('validation.attributes.first_name')]),
+            'last_name.string' => __('validation.string',['attribute' => __('validation.attributes.last_name')]),
+
+            'email.email' => __('validation.email'),
+            'email.unique' =>
+            __('validation.unique',['attribute' => __('validation.attributes.email')]),
+
+
+            "phone_number.digits" =>
+            __('validation.digits',['attribute' => __('validation.attributes.phone_number')]),
+
+            "date_of_birth.date" => __('validation.date'),
+
+            "image.mimes" =>  __('validation.mimes',[
+                'attribute' =>  __('validation.attributes.avatar'),
+                'values' => 'jpg, png, jpeg',
+            ])
         ];
     }
 }

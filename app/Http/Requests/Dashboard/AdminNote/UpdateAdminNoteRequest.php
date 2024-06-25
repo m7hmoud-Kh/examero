@@ -26,4 +26,13 @@ class UpdateAdminNoteRequest extends FormRequest
             'note' => ['string']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'address.string' => __('validation.string',['attribute' => __('validation.attributes.address')]),
+
+            'note.string' => __('validation.string',['attribute' => __('validation.attributes.note')]),
+        ];
+    }
 }
