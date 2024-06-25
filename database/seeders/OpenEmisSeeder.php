@@ -19,7 +19,7 @@ class OpenEmisSeeder extends Seeder
         $faker = Factory::create();
         $adminIds = Teacher::pluck('id');
         $status = [1,2,3];
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 100; $i++) {
             OpenEmis::create([
                 'user_name' => $faker->text(7),
                 'password' => $faker->password(maxLength:10),
