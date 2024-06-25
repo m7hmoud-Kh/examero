@@ -17,7 +17,7 @@ class SubjectResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => $this->status ? 'active' : "Unactive",
+            'status' => $this->status,
             'groups' => GroupResource::collection($this->whenLoaded('groups')),
         ];
     }
