@@ -27,4 +27,14 @@ class UpdateOpenEmisRequest extends FormRequest
             'note' => ['string']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'status.in' =>
+            __('validation.custom.status_open_emis.in',['attribute' => __('validation.attributes.status')]),
+            
+            'note.string' => __('validation.string',['attribute' => __('validation.attributes.note')]),
+        ];
+    }
 }

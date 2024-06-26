@@ -60,9 +60,13 @@ class TeacherRegisterRequest extends FormRequest
                 'attribute' => __('validation.attributes.password'),
                 'value' => 8
             ]),
-            
+
             "password.numbers" =>
             __('validation.numbers',['attribute' => __('validation.attributes.password')]),
+
+
+            "phone_number.required" =>
+            __('validation.required',['attribute' => __('validation.attributes.phone_number')]),
 
             "phone_number.digits" =>
             __('validation.digits',['attribute' => __('validation.attributes.phone_number')]),

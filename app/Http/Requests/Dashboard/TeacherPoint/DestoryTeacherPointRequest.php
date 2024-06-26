@@ -26,4 +26,16 @@ class DestoryTeacherPointRequest extends FormRequest
             'tearcherIds.*' => ['exists:teachers,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'tearcherIds.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.tearcherIds')]),
+            'adminIds.array' =>
+            __('tearcherIds.array',['attribute' => __('validation.attributes.tearcherIds')]),
+            'tearcherIds.*.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.tearcherIds')]),
+        ];
+    }
 }

@@ -35,7 +35,11 @@ return [
 
         'type' => [
             'in' => 'يرجي اختيار نوع المنح رقم من 1 الي 4'
-        ]
+        ],
+
+        'status_open_emis' => [
+            'in' => 'يرجي اختيار الحاله 2 او 3'
+        ],
     ],
 
     "attributes" => [
@@ -88,6 +92,16 @@ return [
         'status' => 'الحاله',
         'group_name' => 'اسم الصف',
         'lesson_name' => 'اسم الدرس',
-        
+        'plan_name' => 'اسم الباقه',
+        'description' => 'وصف',
+        'price' => 'سعر',
+        'allow_exam' => ' الامتحانات المتاحه',
+        'allow_question' => 'الاسئله المتاحه',
+        'for_student' => 'لمن الباقه',
+        'question_type_name' => 'اسم نوع السؤال',
+        'subject_name' => 'اسم الماده',
+        'groupIds' => 'ارقام الصف',
+        'tearcherIds' => 'ارقام المدرسين',
+        'unit_name' => 'اسم الوحده',
     ]
 ];

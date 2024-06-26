@@ -24,7 +24,7 @@ class SubmitExamRequest extends FormRequest
     {
         return [
             'answers' => ['required','array'],
-            'answers.*' => ['required','array','exists:options,id'],
+            'answers.*' => ['array','exists:options,id'],
             'group_id' => ['required_with:subject_id','exists:groups,id'],
             'subject_id' => ['required','exists:subjects,id'],
             'semster' => ['required',Rule::in([1,2])],
@@ -42,8 +42,6 @@ class SubmitExamRequest extends FormRequest
             'answers.array' =>
             __('validation.array',['attribute' => __('validation.attributes.answers')]),
 
-            'answers.*.required' =>
-            __('validation.required',['attribute' => __('validation.attributes.answers')]),
             'answers.*.array' =>
             __('validation.array',['attribute' => __('validation.attributes.answers')]),
             'answers.*.exists' =>
@@ -61,7 +59,7 @@ class SubmitExamRequest extends FormRequest
             __('validation.required',['attribute' => __('validation.attributes.subject_id')]),
             'subject_id.exists' =>
             __('validation.exists',['attribute' => __('validation.attributes.subject_id')]),
-            
+
             'semster.required' =>
             __('validation.required',['attribute' => __('validation.attributes.semster')]),
 

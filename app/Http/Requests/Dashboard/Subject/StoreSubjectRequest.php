@@ -27,4 +27,24 @@ class StoreSubjectRequest extends FormRequest
             'groupIds.*' => ['numeric','exists:groups,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.subject_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.subject_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.subject_name')]),
+
+            'groupIds.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.groupIds')]),
+            'groupIds.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.groupIds')]),
+
+            'groupIds.*.numeric' =>
+            __('validation.numeric',['attribute' => __('validation.attributes.groupIds')]),
+            'groupIds.*.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.groupIds')]),
+        ];
+    }
 }

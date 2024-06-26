@@ -29,4 +29,21 @@ class UpdateSubjectRequest extends FormRequest
             'groupIds.*' => ['numeric','exists:groups,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.subject_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.subject_name')]),
+
+            'status.boolean' => __('validation.boolean',['attribute' => __('validation.attributes.status')]),
+
+            'groupIds.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.groupIds')]),
+            'groupIds.*.numeric' =>
+            __('validation.numeric',['attribute' => __('validation.attributes.groupIds')]),
+            'groupIds.*.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.groupIds')]),
+        ];
+    }
 }

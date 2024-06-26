@@ -27,4 +27,16 @@ class UpdateQuestionTypeRequest extends FormRequest
             'status' => ['boolean']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.question_type_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.question_type_name')]),
+
+            'status.boolean' => __('validation.boolean',['attribute' => __('validation.attributes.status')]),
+
+
+        ];
+    }
 }
