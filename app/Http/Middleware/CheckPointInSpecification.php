@@ -50,7 +50,9 @@ class CheckPointInSpecification
             return $next($request);
         }
         return response()->json([
-            'message' => "Your Balance Points is less than " . TeacherPoint::SPECIFICATION->value,
+            'message' => __('middleware.less_point',[
+                'value' => TeacherPoint::SPECIFICATION->value
+            ])
         ],Response::HTTP_BAD_REQUEST);
     }
 }

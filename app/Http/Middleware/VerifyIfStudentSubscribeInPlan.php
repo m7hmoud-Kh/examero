@@ -36,7 +36,7 @@ class VerifyIfStudentSubscribeInPlan
             }
 
             return response()->json([
-                'message' => 'May be you finish all Exam in this plan Or This Plan Not Found'
+                'message' => __('middleware.expire_plan')
             ],Response::HTTP_BAD_REQUEST);
         }
         return $next($request);

@@ -22,7 +22,7 @@ class CheckPlanForTeacherMiddleware
             return $next($request);
         }
         return response()->json([
-            'message' => 'This is wrong with this plan maybe Not allowed to subscribe it'
+            'message' =>  __('middleware.forbidden_subscribe')
         ],Response::HTTP_BAD_REQUEST);
     }
 }

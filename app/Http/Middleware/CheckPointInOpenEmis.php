@@ -54,7 +54,9 @@ class CheckPointInOpenEmis
             return $next($request);
         }
         return response()->json([
-            'message' => "Your Balance Points is less than " . TeacherPoint::OPENEMIS->value,
+            'message' => __('middleware.less_point',[
+                'value' => TeacherPoint::OPENEMIS->value
+            ])
         ],Response::HTTP_BAD_REQUEST);
     }
 }
