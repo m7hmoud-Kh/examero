@@ -19,24 +19,28 @@ class VerifyIfStudentSubscribeInPlan
     {
         $user = User::whereId(Auth::user()->id)->with('plans')->first();
 
-        $planFound = $user
-        ->plans()
-        ->where('students_plans.status',true)
-        ->where('students_plans.plan_id',$request->plan_id)
-        ->withPivot('exam_used')->first();
+        if($request->plan_id){
+            $planFound = $user
+            ->plans()
+            ->where('students_plans.status',true)
+            ->where('students_plans.plan_id',$request->plan_id)
+            ->withPivot('exam_used')->first();
 
-        if($planFound && $planFound->allow_exam > $planFound->pivot->exam_used){
-            return $next($request);
-        }
-        if($planFound){
-            $planFound->pivot->update([
-                'status' => false
-            ]);
-        }
+            if($planFound && $planFound->allow_exam > $planFound->pivot->exam_used){
+                return $next($request);
+            }
+            if($planFound){
+                $planFound->pivot->update([
+                    'status' => false
+                ]);
+            }
 
-        return response()->json([
-            'message' => 'May be you finish all Exam in this plan'
-        ],Response::HTTP_BAD_REQUEST);
+            return response()->json([
+                'message' => __('middleware.expire_plan')
+            ],Response::HTTP_BAD_REQUEST);
+        }
+        return $next($request);
+
 
     }
 }

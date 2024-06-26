@@ -26,4 +26,15 @@ class StoreAdminNoteRequest extends FormRequest
             'note' => ['required','string']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'address.required' => __('validation.required',['attribute' => __('validation.attributes.address')]),
+            'address.string' => __('validation.string',['attribute' => __('validation.attributes.address')]),
+
+            'note.required' => __('validation.required',['attribute' => __('validation.attributes.note')]),
+            'note.string' => __('validation.string',['attribute' => __('validation.attributes.note')]),
+        ];
+    }
 }

@@ -25,7 +25,7 @@ class ProfileAuthService
         $this->updateImage($request,$model,$diskName,$pathImage,$instance);
 
         return response()->json([
-            'message' => 'Info Updated Data Successfully..',
+            'message' => __('services.profile_updated'),
             'status' => Response::HTTP_ACCEPTED
         ],Response::HTTP_ACCEPTED);
     }
@@ -38,7 +38,7 @@ class ProfileAuthService
             'password' => $request->password
         ]);
         return response()->json([
-            'message' => 'Password Change Successfully',
+            'message' => __('services.password_updated'),
             'status' => Response::HTTP_OK
         ]);
     }

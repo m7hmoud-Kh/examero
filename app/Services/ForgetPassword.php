@@ -36,11 +36,11 @@ class ForgetPassword
                 'token' => $token,
             ]));
             return response()->json([
-                'message' =>  'Mail was sent, please Check Your Inbox'
+                'message' =>  __('services.mail_send')
             ]);
         }
         return response()->json([
-            'error' => 'Email Not Found'
+            'error' => __('services.email_not_found')
         ], Response::HTTP_BAD_REQUEST);
     }
 
@@ -53,7 +53,7 @@ class ForgetPassword
             ]);
         }else{
             return response()->json([
-                'message' => "Code is invalid"
+                'message' => __('services.code_invalid')
             ], Response::HTTP_BAD_REQUEST);
         }
     }
@@ -68,11 +68,11 @@ class ForgetPassword
             ]);
             $passwordReset->delete();
             return response()->json([
-                'message' => 'Password Updated Successfully'
+                'message' => __('services.password_updated')
             ]);
         }else{
             return response()->json([
-                'message' => 'Invalid Data',
+                'message' => __('services.invalid_data'),
             ]);
         }
     }

@@ -26,4 +26,16 @@ class DestoryAdminPointRequest extends FormRequest
             'adminIds.*' => ['exists:admins,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'adminIds.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.adminIds')]),
+            'adminIds.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.adminIds')]),
+            'adminIds.*.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.adminIds')]),
+        ];
+    }
 }

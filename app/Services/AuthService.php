@@ -39,7 +39,7 @@ class AuthService
     {
         if (!$token = auth($guard)->attempt($request->validated())) {
             return [
-                'error' => 'Unauthorized',
+                'error' => __('services.unauth'),
                 'status' => 400,
             ];
         }
@@ -47,7 +47,7 @@ class AuthService
             return $this->createNewToken($token,$guard,$model);
         }else{
             return [
-                'error' => 'Maybe Your Account is not verified',
+                'error' => __('services.not_verified'),
                 'status' => 400,
             ];
         }
@@ -71,7 +71,6 @@ class AuthService
             'error' => 'Unauthorized',
             'status' => 400,
         ];
-
     }
 
     private function generateToken()

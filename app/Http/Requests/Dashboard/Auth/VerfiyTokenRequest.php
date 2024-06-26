@@ -25,4 +25,15 @@ class VerfiyTokenRequest extends FormRequest
             'token' => ['required','string','exists:password_reset_tokens,token'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'token.required' =>
+            __('validation.required',['attribute' =>  __('validation.attributes.token')]),
+            'token.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.token')]),
+            'token.string' => __('validation.string',['attribute' => __('validation.attributes.token')]),
+        ];
+    }
 }

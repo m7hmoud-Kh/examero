@@ -28,4 +28,36 @@ class SaveExamRequest extends FormRequest
             'teacher_id' => ['exists:teachers,id']
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'questionIds.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.questionIds')]),
+            'questionIds.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.questionIds')]),
+
+            "questionIds.min" =>
+            __('validation.min',[
+                'attribute' => __('validation.attributes.questionIds'),
+                'value' => 1
+            ]),
+
+
+            "questionIds.*.exists" =>
+            __('validation.exists',[
+                'attribute' => __('validation.attributes.questionIds'),
+            ]),
+
+            'plan_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.plan_id')]),
+
+            'teacher_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.teacher_id')]),
+
+
+
+        ];
+    }
 }

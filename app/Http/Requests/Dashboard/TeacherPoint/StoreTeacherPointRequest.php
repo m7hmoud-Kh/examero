@@ -29,4 +29,27 @@ class StoreTeacherPointRequest extends FormRequest
             'teacher_id' => ['required','exists:teachers,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'message.required' => __('validation.required',['attribute' => __('validation.attributes.message')]),
+            'message.string' => __('validation.string',['attribute' => __('validation.attributes.message')]),
+
+            'points.required' => __('validation.required',['attribute' => __('validation.attributes.points')]),
+
+            'points.integer' => __('validation.integer',['attribute' => __('validation.attributes.points')]),
+            'points.min' => __('validation.min',[
+                'attribute' => __('validation.attributes.points'),
+                'value' => 0
+            ]),
+
+            'type.required' => __('validation.required',['attribute' => __('validation.attributes.type')]),
+
+            'type.in' => __('validation.custom.type.in',['attribute' => __('validation.attributes.type')]),
+
+            'teacher_id.required' => __('validation.required',['attribute' => __('validation.attributes.teacher_id')]),
+            'teacher_id.exists' => __('validation.exists',['attribute' => __('validation.attributes.teacher_id')]),
+        ];
+    }
 }

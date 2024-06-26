@@ -27,4 +27,24 @@ class StoreUnitRequest extends FormRequest
             'subject_id' => ['required','exists:subjects,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.unit_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.unit_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.unit_name')]),
+
+            'group_id.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.group_id')]),
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
+
+            'subject_id.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.subject_id')]),
+            'subject_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.subject_id')]),
+        ];
+    }
 }

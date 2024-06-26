@@ -26,4 +26,16 @@ class PlanServiceRequest extends FormRequest
             'teacher_id' => ['exists:teachers,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'plan_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.plan_id')]),
+
+            'teacher_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.teacher_id')]),
+
+        ];
+    }
 }

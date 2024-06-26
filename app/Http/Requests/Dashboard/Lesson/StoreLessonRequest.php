@@ -26,4 +26,17 @@ class StoreLessonRequest extends FormRequest
             'unit_id' => ['required','exists:units,id']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => __('validation.required',['attribute' => __('validation.attributes.lesson_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.lesson_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.lesson_name')]),
+
+            'unit_id.required' => __('validation.required',['attribute' => __('validation.attributes.unit_id')]),
+            'unit_id.exists' => __('validation.exists',['attribute' => __('validation.attributes.unit_id')]),
+
+        ];
+    }
 }

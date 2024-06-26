@@ -27,4 +27,30 @@ class ChangePasswordRequest extends FormRequest
             'current_password' => ['required','current_password:api']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            "password.required" =>
+            __('validation.required',['attribute' => __('validation.attributes.password')]),
+            "password.confirmed" =>
+            __('validation.confirmed',['attribute' => __('validation.attributes.password')]),
+            "password.letters" =>
+            __('validation.letters',['attribute' => __('validation.attributes.password')]),
+            "password.min" =>
+            __('validation.min',[
+                'attribute' => __('validation.attributes.password'),
+                'value' => 8
+            ]),
+            "password.numbers" =>
+            __('validation.numbers',['attribute' => __('validation.attributes.password')]),
+
+            "current_password.required" =>
+            __('validation.required',['attribute' => __('validation.attributes.current_password')]),
+
+            "current_password.current_password" => __('validation.current_password'),
+
+
+        ];
+    }
 }

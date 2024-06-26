@@ -24,12 +24,55 @@ class SubmitExamRequest extends FormRequest
     {
         return [
             'answers' => ['required','array'],
-            'answers.*' => ['required','array','exists:options,id'],
-            'group_id' => ['required','exists:groups,id'],
-            'subject_id' => ['required_with:group_id','exists:subjects,id'],
+            'answers.*' => ['array','exists:options,id'],
+            'group_id' => ['required_with:subject_id','exists:groups,id'],
+            'subject_id' => ['required','exists:subjects,id'],
             'semster' => ['required',Rule::in([1,2])],
             'lesson_id' => ['exists:lessons,id'],
             'unit_id' => ['exists:units,id','required_with:lesson_id'],
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+            'answers.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.answers')]),
+            'answers.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.answers')]),
+
+            'answers.*.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.answers')]),
+            'answers.*.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.answers')]),
+
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
+            "group_id.required_with" => __('validation.required_with',
+            [
+            'attribute' => __('validation.attributes.group_id'),
+            'value'=> __('validation.attributes.subject_id')
+            ]),
+
+            'subject_id.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.subject_id')]),
+            'subject_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.subject_id')]),
+
+            'semster.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.semster')]),
+
+            'lesson_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.lesson_id')]),
+
+            'unit_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.unit_id')]),
+            "unit_id.required_with" => __('validation.required_with',
+            [
+            'attribute' => __('validation.attributes.unit_id'),
+            'value'=> __('validation.attributes.lesson_id')
+            ]),
         ];
     }
 }

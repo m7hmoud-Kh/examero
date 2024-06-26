@@ -23,6 +23,16 @@ class StoreQuestionTypeRequest extends FormRequest
     {
         return [
             'name' => ['required','string','unique:question_types'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.question_type_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.question_type_name')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.question_type_name')]),
 
         ];
     }

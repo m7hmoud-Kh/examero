@@ -32,4 +32,42 @@ class StoreOpenEmisRequest extends FormRequest
             'plan_id' => ['exists:plans,id']
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'user_name.required' => __('validation.required',['attribute' => __('validation.attributes.user_name')]),
+            'user_name.string' => __('validation.string',['attribute' => __('validation.attributes.user_name')]),
+
+            'password_site.required' => __('validation.required',['attribute' => __('validation.attributes.password_site')]),
+            'password_site.string' => __('validation.string',['attribute' => __('validation.attributes.password_site')]),
+
+            'subject.required' => __('validation.required',['attribute' => __('validation.attributes.subject')]),
+            'subject.string' => __('validation.string',['attribute' => __('validation.attributes.subject')]),
+
+            'group.required' => __('validation.required',['attribute' => __('validation.attributes.group')]),
+            'group.string' => __('validation.string',['attribute' => __('validation.attributes.group')]),
+
+
+            'phone_number.required' => __('validation.required',['attribute' => __('validation.attributes.phone_number')]),
+            "phone_number.digits" =>
+            __('validation.digits',['attribute' => __('validation.attributes.phone_number')]),
+
+            'document.required' => __('validation.required',['attribute' => __('validation.attributes.document')]),
+            "document.mimes" =>  __('validation.mimes',[
+                'attribute' =>  __('validation.attributes.document'),
+                'values' => 'jpg,png,jpeg,pdf',
+            ]),
+
+            'teacher_id.required' => __('validation.required',['attribute' => __('validation.attributes.teacher_id')]),
+
+            'teacher_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.teacher_id')]),
+
+            'plan_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.plan_id')]),
+
+        ];
+    }
 }

@@ -43,4 +43,75 @@ class UpdateQuestionRequest extends FormRequest
             'options.*.image' => ['mimes:jpg,png,jpeg',]
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.questionName')]),
+            'name.unique' => __('validation.unique',['attribute' => __('validation.attributes.questionName')]),
+
+            'point.numeric' =>
+            __('validation.numeric',['attribute' => __('validation.attributes.point')]),
+
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
+
+            'subject_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.subject_id')]),
+
+            'unit_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.unit_id')]),
+
+            'lesson_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.lesson_id')]),
+
+            'question_type_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.question_type_id')]),
+
+            'level.in' =>
+            __('validation.custom.level.in',['attribute' => __('validation.attributes.level')]),
+            'semster.in' =>
+            __('validation.custom.semster.in',['attribute' => __('validation.attributes.semster')]),
+
+            'for.in' =>
+            __('validation.custom.for.in',['attribute' => __('validation.attributes.for')]),
+
+            'status.in' =>
+            __('validation.custom.status_open_emis.in',['attribute' => __('validation.attributes.status')]),
+
+            'has_branch.boolean' =>
+            __('validation.boolean',['attribute' => __('validation.attributes.has_branch')]),
+
+            'is_choose.boolean' =>
+            __('validation.boolean',['attribute' => __('validation.attributes.is_choose')]),
+
+            "image.mimes" =>  __('validation.mimes',[
+                'attribute' =>  __('validation.attributes.question_image'),
+                'values' => 'jpg,png,jpeg',
+            ]),
+
+            'options.array' =>
+            __('validation.array',['attribute' => __('validation.attributes.options')]),
+
+            "options.min" =>
+            __('validation.min',[
+                'attribute' => __('validation.attributes.options'),
+                'value' => 1
+            ]),
+
+            'options.*.option.string' =>
+            __('validation.string',['attribute' => __('validation.attributes.option')]),
+
+
+            'options.*.is_correct.boolean' =>
+            __('validation.boolean',['attribute' => __('validation.attributes.is_correct')]),
+
+            "options.*.image.mimes" =>  __('validation.mimes',[
+                'attribute' =>  __('validation.attributes.option_image'),
+                'values' => 'jpg,png,jpeg',
+            ]),
+
+
+        ];
+    }
 }

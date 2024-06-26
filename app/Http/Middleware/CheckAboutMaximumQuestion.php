@@ -42,7 +42,7 @@ class CheckAboutMaximumQuestion
             return $next($request);
         }
         return response()->json([
-            'message' => 'You exceed limitation in questions'
+            'message' => __('middleware.limitation_question')
         ],Response::HTTP_BAD_REQUEST);
 
     }
