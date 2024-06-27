@@ -17,7 +17,7 @@ class LessonResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => $this->status ? 'active' : 'Unactive',
+            'status' => $this->status,
             'unit' => new UnitResource($this->whenLoaded('unit'))
         ];
     }

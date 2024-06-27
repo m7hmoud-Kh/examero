@@ -18,7 +18,6 @@ class ExamResource extends JsonResource
         return [
             'id' => $this->id,
             'student_id' => $this->user_id,
-            'name' => $this->name,
             'semster' => Question::getSemsterName($this->semster),
             'group' => new GroupResource($this->whenLoaded('group')),
             'subject' => new GroupResource($this->whenLoaded('subject')),

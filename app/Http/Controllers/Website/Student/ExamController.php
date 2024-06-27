@@ -13,6 +13,7 @@ use App\Models\Exam;
 use App\Models\Plan;
 use App\Models\Question;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -43,6 +44,18 @@ class ExamController extends Controller
     {
         $allExams = Exam::with('user','group','subject','unit','lesson')
         ->where('user_id',Auth::user()->id)
+        ->paginate(Config::get('app.per_page'));
+        return response()->json([
+            'data' => ExamResource::collection($allExams),
+            'meta' => $this->getPaginatable($allExams)
+        ]);
+    }
+
+    public function searchExamByName(Request $request)
+    {
+        $allExams = Exam::with('user','group','subject','unit','lesson')
+        ->where('user_id',Auth::user()->id)
+        ->where('name','like',"%$request->key%")
         ->paginate(Config::get('app.per_page'));
         return response()->json([
             'data' => ExamResource::collection($allExams),
@@ -119,7 +132,6 @@ class ExamController extends Controller
             }
 
             $exam =  Exam::create([
-                'name' => $request->name,
                 'user_id' => Auth::guard('api')->user()->id,
                 'semster'  => $request->semster,
                 'group_id' => $request->group_id,
