@@ -119,6 +119,7 @@ class ExamController extends Controller
             }
 
             $exam =  Exam::create([
+                'name' => $request->name,
                 'user_id' => Auth::guard('api')->user()->id,
                 'semster'  => $request->semster,
                 'group_id' => $request->group_id,

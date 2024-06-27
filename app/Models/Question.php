@@ -146,10 +146,10 @@ class Question extends Model
 
         switch ($semster) {
             case QuestionSemster::FIRST_SEMSTER->value:
-                return [QuestionSemster::FIRST_SEMSTER->value, 'First Semster'];
+                return [QuestionSemster::FIRST_SEMSTER->value, __('model.First Semster')];
             break;
             case QuestionSemster::SECOND_SEMSTER->value:
-                return [QuestionSemster::SECOND_SEMSTER->value, 'Second Semster'];
+                return [QuestionSemster::SECOND_SEMSTER->value, __('model.Second Semster')];
             break;
             default:
                 # code...

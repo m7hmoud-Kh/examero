@@ -23,6 +23,7 @@ class SubmitExamRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required','string'],
             'answers' => ['required','array'],
             'answers.*' => ['array','exists:options,id'],
             'group_id' => ['required_with:subject_id','exists:groups,id'],
@@ -37,6 +38,9 @@ class SubmitExamRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => __('validation.required',['attribute' => __('validation.attributes.exam_name')]),
+            'name.string' => __('validation.string',['attribute' => __('validation.attributes.exam_name')]),
+
             'answers.required' =>
             __('validation.required',['attribute' => __('validation.attributes.answers')]),
             'answers.array' =>

@@ -103,5 +103,6 @@ return [
         'groupIds' => 'ارقام الصف',
         'tearcherIds' => 'ارقام المدرسين',
         'unit_name' => 'اسم الوحده',
+        'exam_name' => 'اسم الامتحان',
     ]
 ];
