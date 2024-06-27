@@ -17,7 +17,7 @@ class UnitResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'status' => $this->status ? 'Active' : 'Unactive',
+            'status' => $this->status,
             'group' => new GroupResource($this->whenLoaded('group')),
             'subject' => new SubjectResource($this->whenLoaded('subject'))
         ];

@@ -25,7 +25,7 @@ class ExamResource extends JsonResource
             'lesson' => new LessonResource($this->whenLoaded('lesson')),
             'total_score' => $this->total_score,
             'result' => $this->result,
-            'status' => $this->total_score / 2 <= $this->result ? 'Success' : 'Failed',
+            'status' => $this->total_score / 2 <= $this->result ? 'ناجح' : 'راسب',
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s A'),
         ];
     }

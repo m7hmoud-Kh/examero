@@ -151,6 +151,7 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
         Route::post('/genrate-exam','generateExam')->middleware('StudentSubscribe');
         Route::post('/submit-exam','submitExam');
         Route::get('/exams','getAllExams');
+        Route::get('/exams-search','searchExamByName');
         Route::get('/exams-info','getSomeInfo');
     });
 

@@ -23,6 +23,7 @@ class SubmitExamRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required','string'],
             'answers' => ['required','array'],
             'answers.*' => ['array','exists:options,id'],
             'group_id' => ['required_with:subject_id','exists:groups,id'],
