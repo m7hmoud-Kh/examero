@@ -21,8 +21,7 @@ class ProfileAuthService
     {
         $instance = $model::whereId(auth($guard)->user()->id)->first();
         $instance->update($request->except('image'));
-
-        $this->updateImage($request,$model,$diskName,$pathImage,$instance);
+        $this->updateImage($request,$diskName,$pathImage,$instance);
 
         return response()->json([
             'message' => __('services.profile_updated'),
@@ -43,17 +42,16 @@ class ProfileAuthService
         ]);
     }
 
-    private function updateImage($request,Model $model, $diskName, $pathImage,$instance)
+    private function updateImage($request, $diskName, $pathImage,$instance)
     {
         if($request->file('image')){
             //remove old Image
-            $image = $model->media()->first();
+            $image = $instance->media()->first();
             if($image){
                 $this->deleteImage($diskName,$image);
-                $model->media()->delete();
-            }
+                $instance->media->delete();
 
-            // dd($image,$request->image,$diskName,$pathImage,$firstName);
+            }
             //insert New Image
             $newImage = $this->insertImage($instance->first_name,$request->image,$pathImage);
             $this->insertImageInMeddiable($instance,$newImage,'media');
