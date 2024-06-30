@@ -18,9 +18,9 @@ class PlanController extends Controller
         ->plans()
         ->where('students_plans.status',true)
         ->withPivot('exam_used')->get();
-
         return response()->json([
-            'plans' => $plans
+            // 'plans' => $plans
+            'plans' => PlanResource::collection($plans)
         ],Response::HTTP_OK);
     }
 

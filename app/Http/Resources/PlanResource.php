@@ -23,6 +23,14 @@ class PlanResource extends JsonResource
             'allow_question' => $this->allow_question,
             'status' => $this->status,
             'for_whom' => $this->for_student ? 'Student' : 'Teacher',
+            'pivot' => $this->whenLoaded('pivot', function () {
+                return [
+                    'exam_used' => $this->pivot->exam_used,
+                    'subscribe type' => date_format($this->created_at, 'Y m-d h:i:s A'),
+                    'payment_id' => $this->pivot->payment_id,
+                    'type' => $this->pivot->type,
+                ];
+            }),
         ];
     }
 }
