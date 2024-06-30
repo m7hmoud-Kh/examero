@@ -11,7 +11,7 @@ class TeacherPlanDetails extends Model
     use HasFactory;
     protected $guarded = [];
 
-    
+
 
     public static function getTypeName($status)
     {
@@ -24,11 +24,11 @@ class TeacherPlanDetails extends Model
                 return [ TeacherServicesType::OPENEMIS->value, 'Open Emis'];
             break;
             case  TeacherServicesType::CERTIFICATE->value:
-                return [ TeacherServicesType::CERTIFICATE->valuee, 'certificate'];
+                return [ TeacherServicesType::CERTIFICATE->value, 'certificate'];
             break;
 
             case  TeacherServicesType::SPECIFICATION->value:
-                return [ TeacherServicesType::SPECIFICATION->valuee, 'Specification'];
+                return [ TeacherServicesType::SPECIFICATION->value, 'Specification'];
             break;
             default:
                 # code...
