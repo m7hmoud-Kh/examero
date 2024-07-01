@@ -27,8 +27,8 @@ class AdminResource extends JsonResource
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s'),
             'media' => new MediaResource($this->media),
             'ImagePath' =>Admin::PATH_IMAGE,
-            'role_id' => $this->roles[0]->id,
-            'role_name' => $this->roles[0]->name,
+            'role_id' => $this->roles[0]->id ?? null,
+            'role_name' => $this->roles[0]->name ?? null,
         ];
     }
 }

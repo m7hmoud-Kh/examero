@@ -13,7 +13,7 @@ class ActivityServices
     {
         if(Auth::guard('admin')->user()){
             $causer = Admin::role(['manager','supervisor','owner'])->find(Auth::guard('admin')->user()->id);
-            $activity->description = "$modelName has been {$eventName} by " . ($causer ? $causer->email : 'an unknown user');
+            $activity->description = __('services.has_been_by') . ' ' . ($causer ? $causer->email : 'an unknown user') . ' '. __("services.$eventName") . ' ' . __("services.$modelName");
             $activity->properties = $activity->properties->merge([
                 'causer_email'=>$causer ? $causer->email : 'unknown',
                 'fullName' =>
