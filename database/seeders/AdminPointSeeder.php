@@ -19,7 +19,7 @@ class AdminPointSeeder extends Seeder
         $faker = Factory::create();
         $adminIds = Admin::pluck('id');
         $status = [1,2,3,4];
-        for ($i=0; $i < 20; $i++) {
+        for ($i=0; $i < 100; $i++) {
             AdminPoint::create([
                 'message' => $faker->text(30),
                 'points' => $faker->randomNumber(2),
