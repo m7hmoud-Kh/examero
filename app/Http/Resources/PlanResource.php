@@ -26,7 +26,7 @@ class PlanResource extends JsonResource
             'pivot' => $this->whenLoaded('pivot', function () {
                 return [
                     'exam_used' => $this->pivot->exam_used,
-                    'subscribe type' => date_format($this->created_at, 'Y m-d h:i:s A'),
+                    'subscribe_type' => date_format($this->created_at, 'Y m-d h:i:s A'),
                     'payment_id' => $this->pivot->payment_id,
                     'type' => $this->pivot->type,
                 ];

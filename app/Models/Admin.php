@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Contracts\Role;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
