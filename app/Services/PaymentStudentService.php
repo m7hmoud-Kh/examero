@@ -7,7 +7,9 @@ use App\Models\Admin;
 use App\Models\Plan;
 use App\Models\TeacherPlan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Spatie\Activitylog\Contracts\Activity;
 
 class PaymentStudentService
@@ -24,7 +26,6 @@ class PaymentStudentService
     public function verifyStudentPlan($paymentId)
     {
         DB::table('students_plans')
-        ->where('user_id', Auth::user()->id)
         ->where('payment_id',$paymentId)
         ->update(['status' => true]);
     }
@@ -32,8 +33,12 @@ class PaymentStudentService
     public function verifyTeacherPlan($paymentId)
     {
         $teacherPlan = TeacherPlan::where('payment_id',$paymentId)->first();
-        $teacherPlan->update([
-            'status' => true
-        ]);
+        if($teacherPlan){
+            $teacherPlan->update([
+                'status' => true
+            ]);
+            return Redirect::to(Config::get('app.frontAppUrl')."/teacher/payment/SuccessPayment");
+
+        }
     }
 }

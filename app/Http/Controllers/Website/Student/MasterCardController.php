@@ -47,13 +47,9 @@ class MasterCardController extends Controller
         $response = $payment->verify($request);
 
         if($response['success']){
-            if(Auth::guard('teacher')->user()){
-                $this->paymentService->verifyTeacherPlan($response['payment_id']);
-                return Redirect::to(Config::get('app.frontAppUrl')."/teacher/payment/SuccessPayment");
-            }elseif(Auth::user()){
-                $this->paymentService->verifyStudentPlan($response['payment_id']);
-                return Redirect::to(Config::get('app.frontAppUrl')."/student/payment/SuccessPayment");
-            }
+            $this->paymentService->verifyTeacherPlan($response['payment_id']);
+            $this->paymentService->verifyStudentPlan($response['payment_id']);
+            return Redirect::to(Config::get('app.frontAppUrl')."/student/payment/SuccessPayment");
         }
 
         return response()->json([
