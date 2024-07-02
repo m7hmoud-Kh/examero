@@ -8,8 +8,11 @@ use App\Models\Plan;
 use App\Models\User;
 use App\Services\PaymentStudentService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Nafezly\Payments\Classes\PayPalPayment;
 
 class PaypalPaymentController extends Controller
@@ -43,23 +46,15 @@ class PaypalPaymentController extends Controller
         if($response['success']){
             if(Auth::guard('teacher')->user()){
                 $this->paymentService->verifyTeacherPlan($response['payment_id']);
+                return Redirect::to(Config::get('app.frontAppUrl')."/teacher/payment/SuccessPayment");
             }elseif(Auth::user()){
                 $this->paymentService->verifyStudentPlan($response['payment_id']);
+                return Redirect::to(Config::get('app.frontAppUrl')."/student/payment/SuccessPayment");
             }
-            return response()->json([
-                'success' => $response['success'],
-                'payment_id' => $response['payment_id'],
-                'message' => $response['message']
-            ]);
         }
-        
         return response()->json([
-            'success' => $response['success'],
-            'payment_id' => $response['payment_id'],
-            'message' => $response['message']
-        ]);
-
-
+            'message' => 'BAD REQUEST'
+        ],Response::HTTP_BAD_REQUEST);
         // return to page website after verify account
         // return Redirect::to(config::get('app.frontAppUrl')."/payment/success");
     }

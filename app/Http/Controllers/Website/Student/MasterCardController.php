@@ -6,7 +6,10 @@ use App\Enums\PaymentType;
 use App\Http\Controllers\Controller;
 use App\Services\PaymentStudentService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Redirect;
 use Nafezly\Payments\Classes\PaymobPayment;
 
 class MasterCardController extends Controller
@@ -46,15 +49,15 @@ class MasterCardController extends Controller
         if($response['success']){
             if(Auth::guard('teacher')->user()){
                 $this->paymentService->verifyTeacherPlan($response['payment_id']);
+                return Redirect::to(Config::get('app.frontAppUrl')."/teacher/payment/SuccessPayment");
             }elseif(Auth::user()){
                 $this->paymentService->verifyStudentPlan($response['payment_id']);
+                return Redirect::to(Config::get('app.frontAppUrl')."/student/payment/SuccessPayment");
             }
         }
 
         return response()->json([
-            'success' => $response['success'],
-            'payment_id' => $response['payment_id'],
-            'message' => $response['message']
-        ]);
+            'message' => 'BAD REQUEST'
+        ],Response::HTTP_BAD_REQUEST);
     }
 }
