@@ -10,6 +10,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 use Spatie\Activitylog\Models\Activity;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ActivityLogController extends Controller
 {
     use Paginatable;
@@ -56,7 +58,7 @@ class ActivityLogController extends Controller
 
     public function destory(Request $request)
     {
-        $allActivity = Activity::whereIn('id',$request->activityIds);
+        $allActivity = Activity::whereIn('id',$request->activityIds)->get();
         foreach ($allActivity as $activity) {
             $activity->delete();
         }

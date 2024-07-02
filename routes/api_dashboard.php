@@ -46,8 +46,6 @@ Route::controller(ProfileController::class)->group(function(){
 
 Route::middleware('auth:admin')->group(function(){
 
-
-
     Route::controller(NotesController::class)->prefix('notes')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
@@ -112,7 +110,8 @@ Route::middleware('auth:admin')->group(function(){
     });
 
 
-    Route::controller(QuestionTypeController::class)->prefix('questions-type')->group(function(){
+    Route::controller(QuestionTypeController::class)->prefix('questions-type')
+    ->group(function(){
         Route::get('/','index');
         Route::post('/','store');
         Route::get('/selection','showQuestionsTypeInSelection');
@@ -121,7 +120,8 @@ Route::middleware('auth:admin')->group(function(){
         Route::delete('/{questionTypeId}','destory');
     });
 
-    Route::controller(QuestionController::class)->prefix('questions')->group(function(){
+    Route::controller(QuestionController::class)->prefix('questions')
+    ->group(function(){
         Route::get('/','index');
         Route::post('/','store');
         Route::get('/{questionId}','show');
@@ -145,7 +145,8 @@ Route::middleware('auth:admin')->group(function(){
 
 
 Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
-    Route::controller(SupervisorController::class)->prefix('supervisors')->group(function(){
+    Route::controller(SupervisorController::class)->prefix('supervisors')
+    ->group(function(){
         Route::get('/','index');
         Route::post('/','store');
         Route::get('/{supervisorId}','show');
@@ -153,8 +154,10 @@ Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
         Route::delete('/{supervisorId}','destory');
     });
 
-    Route::controller(ActivityLogController::class)->prefix('activity')->group(function(){
+    Route::controller(ActivityLogController::class)->prefix('activity')
+    ->group(function(){
         Route::get('/manager','getActivityForManager');
+        Route::delete('/','destory');
     });
 
 });
@@ -211,7 +214,8 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         Route::post('store-exam-info','saveInfoExam');
     });
 
-    Route::controller(ActivityLogController::class)->prefix('activity')->group(function(){
+    Route::controller(ActivityLogController::class)->prefix('activity')
+    ->group(function(){
         Route::get('/','index');
     });
 
