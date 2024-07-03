@@ -157,7 +157,7 @@ Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
     Route::controller(ActivityLogController::class)->prefix('activity')
     ->group(function(){
         Route::get('/manager','getActivityForManager');
-        Route::delete('/','destory');
+        Route::put('/','destory');
     });
 
 });
