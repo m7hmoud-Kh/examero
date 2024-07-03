@@ -30,9 +30,13 @@ class ExamController extends Controller
         $percentages = [];
 
         foreach ($allExams as $exam) {
-            $percentages[] = ($exam->result / $exam->total_score) * 100;
+                $percentages[] = ($exam->result / $exam->total_score) * 100;
         }
-        $average = array_sum($percentages) / $allExams->count();
+        if($allExams->count() == 0){
+            $average = 0;
+        }else{
+            $average = array_sum($percentages) / $allExams->count();
+        }
         return response()->json([
             'exam_student_finished' => $allExams->count(),
             'exam_average' => round($average,2)
