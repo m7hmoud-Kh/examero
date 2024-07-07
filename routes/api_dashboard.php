@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Dashboard\ExamServiceController;
+use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ManagerController;
 use App\Http\Controllers\Dashboard\NotesController;
 use App\Http\Controllers\Dashboard\OpenEmisController;
@@ -46,6 +47,9 @@ Route::controller(ProfileController::class)->group(function(){
 
 Route::middleware('auth:admin')->group(function(){
 
+    Route::controller(HomeController::class)->group(function(){
+        Route::get('/show-info','showInfo');
+    });
     Route::controller(NotesController::class)->prefix('notes')->group(function(){
         Route::get('/','index');
         Route::post('/','store');
