@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\Exam\GroupController;
 use App\Http\Controllers\Dashboard\Exam\LessonController;
+use App\Http\Controllers\Dashboard\Exam\QuestionTypeController;
 use App\Http\Controllers\Dashboard\Exam\SubjectController;
 use App\Http\Controllers\Dashboard\Exam\UnitController;
 use App\Http\Controllers\Website\AuthStudentController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Website\Student\StudentNoteController;
 use App\Http\Controllers\Website\Student\StudentProfileController;
 use App\Http\Controllers\Website\Teacher\CertificateController;
 use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
+use App\Http\Controllers\Website\Teacher\HomeController as TeacherHomeController;
 use App\Http\Controllers\Website\Teacher\MasterCardController as TeacherMasterCardController;
 use App\Http\Controllers\Website\Teacher\OpenEmisController;
 use App\Http\Controllers\Website\Teacher\PaypalPaymentController as TeacherPaypalPaymentController;
@@ -129,6 +131,18 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::post('/pay-with-paymob','payWithTeacherPaymob')->middleware('CheckPlanForTeacher');
     });
 
+
+    Route::controller(TeacherHomeController::class)->group(function(){
+        Route::get('/stat-info','getSomeInfoStat');
+    });
+
+
+
+    Route::get('groups/selection',[GroupController::class,'showGroupInSelection']);
+    Route::get('subjects/selection/{groupId}',[SubjectController::class,'showSubjectInSelection']);
+    Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
+    Route::get('lessons/selection/{unitId}',[LessonController::class,'showLessonInSelection']);
+    Route::get('questions-type/selection',[QuestionTypeController::class,'showQuestionsTypeInSelection']);
 });
 
 Route::middleware('auth:api')->prefix('students')->group(function(){
@@ -158,6 +172,7 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
     Route::controller(PlanController::class)->prefix('plans')->group(function(){
         Route::get('/','getAllSubscribePlan');
     });
+
     Route::get('groups/selection',[GroupController::class,'showGroupInSelection']);
     Route::get('subjects/selection/{groupId}',[SubjectController::class,'showSubjectInSelection']);
     Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
