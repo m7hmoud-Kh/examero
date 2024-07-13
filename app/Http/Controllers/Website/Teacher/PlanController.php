@@ -19,7 +19,10 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with('plan')->Status()->get();
+        $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with('plan','details')->Status()->get();
+        $allTeacherPlans->each(function ($teacherPlan) {
+            $teacherPlan->point_used = $teacherPlan->details->sum('point');
+        });
         return response()->json([
             'message' => "Ok",
             'data' => TeacherPlanResource::collection($allTeacherPlans)
