@@ -28,7 +28,10 @@ class PlanController extends Controller
 
     public function getAllPlansSubscibewithDetailsPoints()
     {
-        $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with('plan','details')->get();
+        $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with(['plan','details'])->get();
+        $allTeacherPlans->each(function ($teacherPlan) {
+            $teacherPlan->point_used = $teacherPlan->details->sum('point');
+        });
         return response()->json([
             'message' => "Ok",
             'data' => TeacherPlanResource::collection($allTeacherPlans)
