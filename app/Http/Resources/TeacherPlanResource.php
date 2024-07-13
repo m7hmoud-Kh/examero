@@ -23,6 +23,7 @@ class TeacherPlanResource extends JsonResource
             'status' => $this->status,
             'payment_id' => $this->payment_id,
             'type' => $this->type,
+            'point_used' => $this->point_used ?? null,
             'created_at' => date_format($this->created_at, 'Y m-d h:i:s A')
         ];
     }
