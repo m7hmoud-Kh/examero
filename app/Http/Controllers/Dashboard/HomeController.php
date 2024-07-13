@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\OpenEmis;
 use App\Models\Question;
 use App\Models\Teacher;
+use App\Models\TeacherExam;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class HomeController extends Controller
 
     public function showInfo()
     {
+        $teacherExam = TeacherExam::count();
         $exams = Exam::count();
         $acceptQuestions = Question::where('status',QuestionStatus::ACCPTED->value)->count();
         $rejectQuestions = Question::where('status',QuestionStatus::REJECTED->value)->count();
@@ -29,7 +31,8 @@ class HomeController extends Controller
 
         return response()->json([
             'data' => [
-                'exams' => $exams,
+                'teacherExams' => $teacherExam,
+                'studentExams' => $exams,
                 'acceptQuestion' => $acceptQuestions,
                 'rejectQuestion' => $rejectQuestions,
                 'openEmis' => $openEmis,
