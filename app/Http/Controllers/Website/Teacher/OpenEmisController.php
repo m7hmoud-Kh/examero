@@ -26,7 +26,6 @@ class OpenEmisController extends Controller
     {
         //index
         $allOpenEmis = OpenEmis::with('media')->where('teacher_id',Auth::user()->id)
-        ->where('status',$request->status ?? 1)
         ->latest()
         ->paginate(Config::get('app.per_page'));
 
