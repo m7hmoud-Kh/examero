@@ -23,6 +23,7 @@ class OpenEmisResource extends JsonResource
             'subject' => $this->subject,
             'status' => OpenEmis::getStatusName($this->status),
             'note' => $this->note,
+            'phone_number' => $this->phone_number,
             'teacher' => new TeacherResource($this->whenLoaded('teacher')),
             'media' => new MediaResource($this->whenLoaded('media')),
             'ImagePath' =>$this->whenLoaded('media',OpenEmis::PATH_IMAGE),
