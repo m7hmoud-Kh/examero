@@ -143,6 +143,7 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
     Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
     Route::get('lessons/selection/{unitId}',[LessonController::class,'showLessonInSelection']);
     Route::get('questions-type/selection',[QuestionTypeController::class,'showQuestionsTypeInSelection']);
+    Route::get('questions-type/{questionTypeId}',[QuestionTypeController::class,'show']);
 });
 
 Route::middleware('auth:api')->prefix('students')->group(function(){
