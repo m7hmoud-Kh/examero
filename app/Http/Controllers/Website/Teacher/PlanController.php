@@ -29,6 +29,7 @@ class PlanController extends Controller
         ]);
     }
 
+
     public function getAllPlansSubscibewithDetailsPoints()
     {
         $allTeacherPlans = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->with(['plan','details'])->get();
@@ -40,6 +41,18 @@ class PlanController extends Controller
             'data' => TeacherPlanResource::collection($allTeacherPlans)
         ]);
     }
+
+    public function getPlanByIdSubscibewithDetailsPoints($teacherplanId)
+    {
+        $teacherPlan = TeacherPlan::where('teacher_id',Auth::guard('teacher')->user()->id)->where('id',$teacherplanId)->with(['plan','details'])->first();
+        $teacherPlan->point_used = $teacherPlan->details->sum('point');
+        return response()->json([
+            'message' => "Ok",
+            'data' => new TeacherPlanResource($teacherPlan)
+        ]);
+    }
+
+
 
     //todo must be paid with payment method with price in plan
     //todo must be assign number of question with point in plan
