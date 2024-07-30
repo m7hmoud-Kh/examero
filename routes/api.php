@@ -104,7 +104,7 @@ Route::middleware('auth:teacher')->prefix('teachers')->group(function(){
         Route::post('save-exam','saveExam')
         ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
         Route::post('store-exam-info','saveInfoExam');
-
+        Route::post('questions-by-main-question','getAllQuestionsById');
         Route::get('exams','getAllExam');
     });
 

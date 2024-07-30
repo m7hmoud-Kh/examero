@@ -61,6 +61,28 @@ class ExamController extends Controller
 
     }
 
+    public function getAllQuestionsById(SaveExamRequest $request)
+    {
+        $allQuestions = Question::latest()
+        ->with([
+            'group','subject','unit','lesson',
+            'questionType',
+            'media',
+            'options' => function($q){
+                return $q->with('media');
+            }
+        ])
+        ->whereIn('id',$request->questionIds)
+        ->get();
+
+        return response()->json([
+            'message' => 'Ok',
+            'data' => [
+                'count' => $allQuestions->count(),
+                'questions' => QuestionResource::collection($allQuestions)
+            ]
+        ],Response::HTTP_OK);
+    }
     /**
      * todo check point to do Exam
      * todo must be get Exam all Ids of exam and must not execced
