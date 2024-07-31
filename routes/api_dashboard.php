@@ -22,6 +22,8 @@ use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\SupervisorController;
 use App\Http\Controllers\Dashboard\TeacherController;
 use App\Http\Controllers\Dashboard\TeacherPointController;
+use App\Http\Controllers\Website\Student\ExamController;
+use App\Http\Controllers\Website\Teacher\ExamController as TeacherExamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -217,6 +219,7 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
         Route::post('store-exam-info','saveInfoExam');
     });
+    Route::post('questions-by-main-question',[TeacherExamController::class,'getAllQuestionsById']);
 
     Route::controller(ActivityLogController::class)->prefix('activity')
     ->group(function(){

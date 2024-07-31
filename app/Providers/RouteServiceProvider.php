@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('api')
+            Route::middleware(['api','throttle:api_dashboard'])
                 ->prefix('api_dashboard')
                 ->group(base_path('routes/api_dashboard.php'));
 
@@ -46,6 +46,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting(): void
     {
+        RateLimiter::for('api_dashboard', function (Request $request) {
+            return Limit::perMinute(150)->by($request->user()?->id ?: $request->ip());
+        });
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
