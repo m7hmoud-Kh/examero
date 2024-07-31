@@ -166,6 +166,7 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
     Route::controller(ExamController::class)->group(function(){
         Route::post('/genrate-exam','generateExam')->middleware('StudentSubscribe');
         Route::post('/submit-exam','submitExam');
+        Route::get('/honorary-board/{subject_id}','getHonoraryBoard');
         Route::get('/exams','getAllExams');
         Route::get('/exams-search','searchExamByName');
         Route::get('/exams-info','getSomeInfo');
@@ -175,7 +176,6 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
         Route::get('/','getAllSubscribePlan');
     });
 
-    Route::get('groups/selection',[GroupController::class,'showGroupInSelection']);
     Route::get('subjects/selection/{groupId}',[SubjectController::class,'showSubjectInSelection']);
     Route::get('units/selection/{subjectId}',[UnitController::class,'showUnitInSelection']);
     Route::get('lessons/selection/{unitId}',[LessonController::class,'showLessonInSelection']);
@@ -190,6 +190,8 @@ Route::middleware('auth:api')->prefix('students')->group(function(){
         Route::post('/pay-with-paymob','payWithStudentPaymob')->middleware('CheckPlanForStudent');
     });
 });
+Route::get('students/groups/selection',[GroupController::class,'showGroupInSelection']);
+
 Route::get('/payments/verify-paymob',[MasterCardController::class,'paymob_verify']);
 
 

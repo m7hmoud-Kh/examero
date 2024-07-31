@@ -24,6 +24,8 @@ return new class extends Migration
             $table->foreignId('lesson_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->decimal('total_score');
             $table->decimal('result');
+            $table->integer('questions');
+            $table->integer('time_min');
             $table->timestamps();
         });
     }

@@ -143,7 +143,9 @@ class ExamController extends Controller
                 'unit_id' => $request->unit_id,
                 'lesson_id' => $request->lesson_id,
                 'total_score' => $totalScore,
-                'result' => $result
+                'result' => $result,
+                'time_min' => $request->time_min,
+                'questions' => $questions->count()
             ]);
 
             DB::commit();
@@ -164,6 +166,31 @@ class ExamController extends Controller
             ],Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+    }
+
+
+    public function getHonoraryBoard(Request $request)
+    {
+        $honoraryBoard = Exam::select('user_id',
+        DB::raw('Round((SUM(result) / SUM(total_score)) * 100,2) as total_percentage'))
+        ->where('time_min', '<=', 60)
+        ->where('questions', '>=', 20)
+        ->whereNull('unit_id')
+        ->whereNull('lesson_id')
+        ->where('subject_id',$request->subject_id)
+        ->where('group_id',Auth::user()->group_id)
+        ->groupBy('user_id')
+        ->orderByDesc('total_percentage')
+        ->limit(5)
+        ->with(['user' => function($q){
+            return $q->with('media');
+        }])
+        ->get();
+
+
+        return response()->json([
+            'data' => $honoraryBoard
+        ]);
     }
 
     private function increaseExamUsed($planId)

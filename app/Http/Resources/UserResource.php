@@ -26,7 +26,8 @@ class UserResource extends JsonResource
             'is_block' => $this->is_block,
             'media' => new MediaResource($this->media),
             'ImagePath' => User::PATH_IMAGE,
-            'created_at' => date_format($this->created_at, 'Y m-d h:i:s')
+            'created_at' => date_format($this->created_at, 'Y m-d h:i:s'),
+            'group' => new GroupResource($this->group),
         ];
     }
 }
