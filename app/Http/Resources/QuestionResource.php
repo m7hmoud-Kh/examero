@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Question;
 use App\Models\QuestionType;
+use App\Models\StudentChoices;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -35,7 +36,8 @@ class QuestionResource extends JsonResource
             'ImagePath' =>$this->whenLoaded('media',Question::PATH_IMAGE),
             'adminAuthor' => new AdminQuestionResource($this->whenLoaded('adminQuestion')),
             'teacherAuthor' => new TeacherQuestionResource($this->whenLoaded('teacherQuestion')),
-            'options' => OptionResource::collection($this->whenLoaded('options'))
+            'options' => OptionResource::collection($this->whenLoaded('options')),
+            'studentChoices' => StudentChoicesResource::collection($this->whenLoaded('StudentChoices'))
         ];
     }
 }

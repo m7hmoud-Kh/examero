@@ -8,10 +8,12 @@ use App\Http\Requests\Website\Student\Exam\GenerateExamRequest;
 use App\Http\Requests\Website\Student\Exam\SubmitExamRequest;
 use App\Http\Resources\ExamResource;
 use App\Http\Resources\QuestionResource;
+use App\Http\Resources\StudentChoicesResource;
 use App\Http\Trait\Paginatable;
 use App\Models\Exam;
 use App\Models\Plan;
 use App\Models\Question;
+use App\Models\StudentChoices;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -112,6 +114,38 @@ class ExamController extends Controller
     }
 
 
+    public function previewExam(Request $request)
+    {
+        $examId = $request->exam_id;
+        
+        $questions = Question::with(['options', 'StudentChoices' => function($q) use ($examId) {
+            $q->where('exam_id', $examId)
+            ->where('user_id', Auth()->user()->id);
+        }])
+        ->whereHas('StudentChoices', function($q) use ($examId) {
+            $q->where('exam_id', $examId)
+            ->where('user_id', Auth()->user()->id);
+        })->get();
+
+        if($questions){
+            $exam = Exam::find($request->exam_id);
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'data' => [
+                    'preview' => [
+                        'exam' => new ExamResource($exam),
+                        'questions' => QuestionResource::collection($questions)
+                    ]
+                ]
+            ]);
+        }else{
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Not Found Student Choices'
+            ]);
+        }
+    }
+
     public function submitExam(SubmitExamRequest $request)
     {
         DB::beginTransaction();
@@ -129,10 +163,11 @@ class ExamController extends Controller
 
                 //get total
                 $totalScore += $question->point;
-
                 if (empty(array_diff($selectedOptionIds, $correctOptionIds)) && empty(array_diff($correctOptionIds, $selectedOptionIds))) {
                     $result += $question->point;
                 }
+
+
             }
 
             $exam =  Exam::create([
@@ -148,6 +183,28 @@ class ExamController extends Controller
                 'questions' => $questions->count()
             ]);
 
+            foreach ($questions as $question) {
+
+                $selectedOptionIds = $selectedAnswers[$question->id];
+                $selectedOptionIds = array_map('intval', $selectedOptionIds);
+                $correctOptionIds = $question->options->where('is_correct', 1)->pluck('id')->toArray();
+
+                $isCorrect = 0;
+                if (empty(array_diff($selectedOptionIds, $correctOptionIds))) {
+                    $isCorrect = 1;
+                }
+
+                foreach ($selectedOptionIds as $_ => $optionId) {
+                    StudentChoices::create([
+                        'user_id' => Auth::user()->id,
+                        'exam_id' => $exam->id,
+                        'question_id' => $question->id,
+                        'option_id' => $optionId,
+                        'is_correct' => $isCorrect
+                    ]);
+                }
+            }
+
             DB::commit();
 
             return response()->json([
@@ -155,6 +212,7 @@ class ExamController extends Controller
                 'data' => [
                     'result' => $result,
                     'total_score' => $totalScore,
+                    'exam' => $exam
                 ]
             ],Response::HTTP_OK);
 
@@ -192,6 +250,10 @@ class ExamController extends Controller
             'data' => $honoraryBoard
         ]);
     }
+
+
+
+
 
     private function increaseExamUsed($planId)
     {
