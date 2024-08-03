@@ -30,7 +30,8 @@ class UpdateProfileStudentRequest extends FormRequest
             'email' => ['email',Rule::unique('users')->ignore(Auth::guard('api')->user()->id)],
             'phone_number' => ['string','digits:10'],
             'date_of_birth' => ['date'],
-            'image' => ['mimes:jpg,png,jpeg']
+            'image' => ['mimes:jpg,png,jpeg'],
+            'group_id' => ['exists:groups,id']
         ];
     }
 
@@ -54,7 +55,11 @@ class UpdateProfileStudentRequest extends FormRequest
             "image.mimes" =>  __('validation.mimes',[
                 'attribute' =>  __('validation.attributes.avatar'),
                 'values' => 'jpg, png, jpeg',
-            ])
+            ]),
+
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
+
         ];
     }
 }

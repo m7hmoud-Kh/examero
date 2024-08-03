@@ -30,6 +30,7 @@ class SubmitExamRequest extends FormRequest
             'semster' => ['required',Rule::in([1,2])],
             'lesson_id' => ['exists:lessons,id'],
             'unit_id' => ['exists:units,id','required_with:lesson_id'],
+            'time_min' => ['required','numeric'],
         ];
     }
 
@@ -73,6 +74,11 @@ class SubmitExamRequest extends FormRequest
             'attribute' => __('validation.attributes.unit_id'),
             'value'=> __('validation.attributes.lesson_id')
             ]),
+
+            'time_min.required' =>
+            __('validation.required',['attribute' => __('validation.attributes.time_min')]),
+
+
         ];
     }
 }

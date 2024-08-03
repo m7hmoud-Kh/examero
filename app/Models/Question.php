@@ -79,6 +79,11 @@ class Question extends Model
         return $this->hasMany(Option::class);
     }
 
+    public function StudentChoices()
+    {
+        return $this->hasMany(StudentChoices::class);
+    }
+
     public static function getForWhomName($for)
     {
 

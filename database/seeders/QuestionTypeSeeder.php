@@ -17,7 +17,7 @@ class QuestionTypeSeeder extends Seeder
         $faker = Factory::create();
         for ($i=0; $i < 5; $i++) {
             QuestionType::create([
-                'name' => $faker->text(10),
+                'name' => $faker->unique()->text(10),
                 'status' => $faker->randomElement([true,false])
             ]);
         }

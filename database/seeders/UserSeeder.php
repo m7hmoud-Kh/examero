@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Group;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,6 +16,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $faker = Factory::create();
+        $groupIds = Group::pluck('id');
+
         for ($i=0; $i < 10 ; $i++) {
             User::create([
                 'first_name' => $faker->firstName(),
@@ -25,6 +28,7 @@ class UserSeeder extends Seeder
                 'phone_number' => '01143124020',
                 'is_block' => $faker->boolean(),
                 'email_verified_at' => $faker->dateTime(),
+                'group_id' => $groupIds->random()
             ]);
         }
     }

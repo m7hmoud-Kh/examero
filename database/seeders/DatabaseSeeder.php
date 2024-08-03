@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             PlanSeeder::class,
             UserSeeder::class,
             StudentPlanSeeder::class,
-            OpenEmisSeeder::class
+            OpenEmisSeeder::class,
+            ExamSeeder::class
         ]);
     }
 }

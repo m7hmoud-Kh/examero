@@ -28,7 +28,8 @@ class StudentRegisterRequest extends FormRequest
             'email' => ['required','email','unique:users'],
             'password' => ['required',Password::min(8)->letters()->numbers(),'confirmed'],
             'phone_number' => ['required','string','digits:10'],
-            'date_of_birth' => ['required','date']
+            'date_of_birth' => ['required','date'],
+            'group_id' => ['required','exists:groups,id']
         ];
     }
 
@@ -71,6 +72,13 @@ class StudentRegisterRequest extends FormRequest
             "date_of_birth.required" =>
             __('validation.required',['attribute' =>  __('validation.attributes.date_of_birth')]),
             "date_of_birth.date" => __('validation.date'),
+
+
+            "group_id.required" =>
+            __('validation.required',['attribute' => __('validation.attributes.group_id')]),
+
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
         ];
     }
 }
