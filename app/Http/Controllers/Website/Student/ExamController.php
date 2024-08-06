@@ -117,7 +117,7 @@ class ExamController extends Controller
     public function previewExam(Request $request)
     {
         $examId = $request->exam_id;
-        
+
         $questions = Question::with(['options', 'StudentChoices' => function($q) use ($examId) {
             $q->where('exam_id', $examId)
             ->where('user_id', Auth()->user()->id);
@@ -229,6 +229,7 @@ class ExamController extends Controller
 
     public function getHonoraryBoard(Request $request)
     {
+
         $honoraryBoard = Exam::select('user_id',
         DB::raw('Round((SUM(result) / SUM(total_score)) * 100,2) as total_percentage'))
         ->where('time_min', '<=', 60)
@@ -247,6 +248,7 @@ class ExamController extends Controller
 
 
         return response()->json([
+            'path_user_image' => '/assets/Student/',
             'data' => $honoraryBoard
         ]);
     }
