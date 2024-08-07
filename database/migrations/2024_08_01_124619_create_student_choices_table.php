@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('exam_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('question_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('option_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('option_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->boolean('is_correct');
             $table->timestamps();
         });

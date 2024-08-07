@@ -193,7 +193,6 @@ class ExamController extends Controller
                 if (empty(array_diff($selectedOptionIds, $correctOptionIds))) {
                     $isCorrect = 1;
                 }
-
                 foreach ($selectedOptionIds as $_ => $optionId) {
                     StudentChoices::create([
                         'user_id' => Auth::user()->id,
@@ -201,6 +200,16 @@ class ExamController extends Controller
                         'question_id' => $question->id,
                         'option_id' => $optionId,
                         'is_correct' => $isCorrect
+                    ]);
+                }
+
+                if(empty($selectedOptionIds)){
+                    StudentChoices::create([
+                        'user_id' => Auth::user()->id,
+                        'exam_id' => $exam->id,
+                        'question_id' => $question->id,
+                        'option_id' => null,
+                        'is_correct' => 0
                     ]);
                 }
             }
