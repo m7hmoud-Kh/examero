@@ -12,6 +12,7 @@ use App\Http\Requests\Website\Teacher\Exam\SavePdfsInfoRequest;
 use App\Http\Resources\QuestionResource;
 use App\Http\Resources\TeacherExamResource;
 use App\Http\Trait\Imageable;
+use App\Http\Trait\Paginatable;
 use App\Models\Question;
 use App\Models\Teacher;
 use App\Models\TeacherExam;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
-    use Imageable;
+    use Imageable, Paginatable;
 
     public function generateExam(GenerateQuestionExamRequest $request)
     {
@@ -163,12 +164,13 @@ class ExamController extends Controller
 
     public function getAllExam()
     {
-        $teacherExam = TeacherExam::where('teacher_id',Auth::guard('teacher')->user()->id)->with('subject','group','mediaQuestion','mediaAnswer')->get();
+        $teacherExam = TeacherExam::where('teacher_id',Auth::guard('teacher')->user()->id)->with('subject','group','mediaQuestion','mediaAnswer')->paginate(Config::get('app.per_page'));
 
         return response()->json([
             'message' => 'OK',
             'data' => [
-                'Exams' => TeacherExamResource::collection($teacherExam)
+                'Exams' => TeacherExamResource::collection($teacherExam),
+                'meta' => $this->getPaginatable($allQuestions)
             ]
         ],Response::HTTP_OK);
     }
