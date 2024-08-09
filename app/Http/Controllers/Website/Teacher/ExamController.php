@@ -21,6 +21,7 @@ use App\Models\TeacherPlanDetails;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class ExamController extends Controller
 {
@@ -170,7 +171,7 @@ class ExamController extends Controller
             'message' => 'OK',
             'data' => [
                 'Exams' => TeacherExamResource::collection($teacherExam),
-                'meta' => $this->getPaginatable($allQuestions)
+                'meta' => $this->getPaginatable($teacherExam)
             ]
         ],Response::HTTP_OK);
     }
