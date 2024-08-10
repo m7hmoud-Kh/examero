@@ -37,6 +37,10 @@ class TeacherExam extends Model
         return $this->morphOne(Media::class,'meddiable');
     }
 
+    public function mediaPdf()
+    {
+        return $this->morphMany(Media::class,'meddiable');
+    }
 
     public function group()
     {

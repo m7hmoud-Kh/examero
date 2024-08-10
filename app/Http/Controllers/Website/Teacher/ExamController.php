@@ -152,8 +152,9 @@ class ExamController extends Controller
 
 
         $questionPdf = $this->insertImage($teacherExam->id.'Question',$request->mediaQuestion,TeacherExam::PATH_IMAGE);
-        $answerPdf = $this->insertImage($teacherExam->id.'Answer',$request->mediaAnswer,TeacherExam::PATH_IMAGE);
         $this->insertImageInMeddiable($teacherExam,$questionPdf,'mediaQuestion');
+
+        $answerPdf = $this->insertImage($teacherExam->id.'Answer',$request->mediaAnswer,TeacherExam::PATH_IMAGE);
         $this->insertImageInMeddiable($teacherExam,$answerPdf,'mediaAnswer');
 
 
@@ -165,7 +166,7 @@ class ExamController extends Controller
 
     public function getAllExam()
     {
-        $teacherExam = TeacherExam::where('teacher_id',Auth::guard('teacher')->user()->id)->with('subject','group','mediaQuestion','mediaAnswer')->paginate(Config::get('app.per_page'));
+        $teacherExam = TeacherExam::where('teacher_id',Auth::guard('teacher')->user()->id)->with('subject','group','mediaQuestion','mediaAnswer','mediaPdf')->latest()->paginate(Config::get('app.per_page'));
 
         return response()->json([
             'message' => 'OK',

@@ -22,11 +22,10 @@ class TeacherExamResource extends JsonResource
             'subject' => new GroupResource($this->whenLoaded('subject')),
             'semster' => Question::getSemsterName($this->semster),
             'teacher' => new TeacherResource($this->whenLoaded('teacher')),
-            
-            'mediaQuestion' => new MediaResource($this->whenLoaded('mediaQuestion')),
-            'mediaQuestionPath' =>$this->whenLoaded('mediaQuestion',TeacherExam::PATH_IMAGE),
-            'mediaAnswer' => new MediaResource($this->whenLoaded('mediaAnswer')),
+
+            'mediaPdf' => MediaResource::collection($this->whenLoaded('mediaPdf')),
             'mediaAnswerPath' =>$this->whenLoaded('mediaAnswer',TeacherExam::PATH_IMAGE),
+            'mediaQuestionPath' =>$this->whenLoaded('mediaQuestion',TeacherExam::PATH_IMAGE),
         ];
     }
 }
