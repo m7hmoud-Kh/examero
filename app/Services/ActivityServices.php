@@ -21,8 +21,23 @@ class ActivityServices
                 'role_user' => $causer ? $causer->roles[0]->name : 'unknown',
                 'event' => $activity->event,
             ]);
+
+            $this->recordRecievedOrEndOpenEmis($activity,$eventName,$modelName,$causer);
+
         }else{
             $activity->description = 'null';
+        }
+
+    }
+
+    public function recordRecievedOrEndOpenEmis(Activity $activity, string $eventName, $modelName, $causer)
+    {
+        if($modelName == 'OpenEmis' && $eventName == 'updated'){
+            if($activity->properties['attributes']['status'] == '2' && $activity->properties['old']['status'] != 2){
+                $activity->description = __('services.has_been_by') . ' ' . ($causer ? $causer->email : 'an unknown user') . ' '. __('services.received') . ' ' . __("services.$modelName");
+            }elseif($activity->properties['attributes']['status'] == '3' && $activity->properties['old']['status'] != 3){
+                $activity->description = __('services.has_been_by') . ' ' . ($causer ? $causer->email : 'an unknown user') . ' '. __('services.end') . ' ' . __("services.$modelName");
+            }
         }
     }
 }

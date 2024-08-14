@@ -145,6 +145,22 @@ Route::middleware('auth:admin')->group(function(){
     });
 
 
+    Route::post('questions-by-main-question',[TeacherExamController::class,'getAllQuestionsById']);
+
+
+    Route::controller(CertificateController::class)->group(function(){
+        Route::post('/certificate','makeCertificate')->middleware('CheckPointInCertificate',);
+    });
+
+    Route::controller(OpenEmisController::class)->prefix('open-emis')
+    ->group(function(){
+        Route::post('/','store')->middleware('CheckPointInOpenEmis');
+    });
+
+    Route::controller(SpecificationController::class)->group(function(){
+        Route::post('/specification','makeSpecification')->middleware('CheckPointInSpecification',);
+    });
+
 
 });
 
@@ -167,6 +183,13 @@ Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
     });
 
 });
+
+Route::middleware(['auth:admin','role:supervisor|manager'])->group(function(){
+    Route::controller(AdminPointController::class)->prefix('points')->group(function(){
+        Route::get('/my-point','myPoints');
+    });
+});
+
 
 Route::middleware(['auth:admin','role:owner'])->group(function(){
     Route::controller(ManagerController::class)->prefix('managers')->group(function(){
@@ -199,19 +222,6 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         Route::delete('/{planId}','destory');
     });
 
-    Route::controller(CertificateController::class)->group(function(){
-        Route::post('/certificate','makeCertificate')->middleware('CheckPointInCertificate',);
-    });
-
-    Route::controller(OpenEmisController::class)->prefix('open-emis')
-    ->group(function(){
-        Route::post('/','store')->middleware('CheckPointInOpenEmis');
-    });
-
-    Route::controller(SpecificationController::class)->group(function(){
-        Route::post('/specification','makeSpecification')->middleware('CheckPointInSpecification',);
-    });
-
     Route::controller(ExamServiceController::class)->group(function(){
         Route::post('genrate-exam','generateExam')
         ->middleware('ExamBlanacePointCheck');
@@ -219,7 +229,6 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
         ->middleware(['ExamBlanacePointCheck','CheckAboutMaximumQuestion']);
         Route::post('store-exam-info','saveInfoExam');
     });
-    Route::post('questions-by-main-question',[TeacherExamController::class,'getAllQuestionsById']);
 
     Route::controller(ActivityLogController::class)->prefix('activity')
     ->group(function(){
@@ -227,6 +236,7 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
     });
 
 });
+
 
 
 

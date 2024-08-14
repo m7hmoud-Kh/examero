@@ -25,7 +25,7 @@ class OpenEmis extends Model
     public function tapActivity(Activity $activity, string $eventName)
     {
         $this->activity = new ActivityServices();
-        $this->activity->tapActivity($activity, $eventName, 'Open Emis');
+        $this->activity->tapActivity($activity, $eventName, 'OpenEmis');
     }
 
 

@@ -25,15 +25,30 @@ class AdminPoint extends Model
         $this->activity->tapActivity($activity, $eventName, 'Admin Point');
     }
 
-
-
-    protected $casts = [
-        'type' => AdminTypePoint::class,
-    ];
-
     public function admin()
     {
         return $this->belongsTo(Admin::class);
+    }
+
+    public static function getTypeName($type)
+    {
+        switch ($type) {
+            case AdminTypePoint::REWARD->value:
+                return [AdminTypePoint::REWARD->value, __("model.REWARD")];
+            break;
+            case AdminTypePoint::PUNISHMENT->value:
+                return [AdminTypePoint::PUNISHMENT->value,  __("model.PUNISHMENT")];
+            break;
+            case AdminTypePoint::WARNING->value:
+                return [AdminTypePoint::WARNING->value,  __("model.WARNING")];
+            break;
+            case AdminTypePoint::NOTHING->value:
+                return [AdminTypePoint::NOTHING->value,  __("model.NOTHING")];
+            break;
+            default:
+                # code...
+                break;
+        }
     }
 
 }

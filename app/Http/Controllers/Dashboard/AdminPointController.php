@@ -12,6 +12,7 @@ use App\Http\Resources\AdminPointResource;
 use App\Http\Requests\Dashboard\AdminPoint\StoreAdminPointRequest;
 use App\Http\Trait\Paginatable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class AdminPointController extends Controller
@@ -58,5 +59,15 @@ class AdminPointController extends Controller
         return response()->json([],Response::HTTP_NO_CONTENT);
     }
 
+    public function myPoints()
+    {
+        $myPoints = AdminPoint::where('admin_id',Auth::user('admin')->id)        ->paginate(Config::get('app.per_page'));
+
+        return response()->json([
+            'data' => AdminPointResource::collection($myPoints),
+            'meta' => $this->getPaginatable($myPoints)
+        ]);
+
+    }
 
 }
