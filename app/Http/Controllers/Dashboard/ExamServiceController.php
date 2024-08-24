@@ -26,7 +26,12 @@ class ExamServiceController extends Controller
 
     public function generateExam(GenerateQuestionExamRequest $request)
     {
-        $allQuestion = Question::with(['media'])
+        $allQuestion = Question::with(['group','subject','unit','lesson',
+        'questionType',
+        'media',
+        'options' => function($q){
+            return $q->with('media');
+        }])
         ->where('status',QuestionStatus::ACCPTED->value)
         ->where('group_id',$request->group_id)
         ->where('subject_id',$request->subject_id)
