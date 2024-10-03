@@ -71,8 +71,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Riyadh',
-
+    'timezone' => 'Asia/Amman',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
