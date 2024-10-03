@@ -108,7 +108,7 @@ class ExamController extends Controller
             ],Response::HTTP_OK);
         }else{
             return response()->json([
-                'message' => 'You Exceed Limitation'
+                'message' => 'لقد تخطيت عدد الاسئله المسموحه لك'
             ],Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
