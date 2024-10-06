@@ -27,7 +27,7 @@ class ActivityLogController extends Controller
         ]);
     }
 
-    public function getActivityForManager()
+    public function getActivityManager()
     {
         $allSupervisorActivity = collect()->mapInto(ActivityLogResource::class);
         $allActivity = Activity::with('causer')
@@ -36,7 +36,36 @@ class ActivityLogController extends Controller
         ->paginate(Config::get('app.per_page'));
         foreach ($allActivity as $activity) {
             $activityCauserRole = $activity->causer->roles[0]->name  ?? null;
-            if($activityCauserRole== 'supervisor'){
+            if($activityCauserRole == 'manager'){
+                $allSupervisorActivity->push(new ActivityLogResource($activity));
+            }
+        }
+
+        $perPage = Config::get('app.per_page');
+        $currentPage = request()->get('page', 1);
+        $allManagerActivity = new \Illuminate\Pagination\LengthAwarePaginator(
+            $allSupervisorActivity->forPage($currentPage, $perPage),
+            $allSupervisorActivity->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+        return response()->json([
+            'message' => 'Ok',
+            'data' => $allManagerActivity,
+        ]);
+    }
+
+    public function getActivitySupervisor()
+    {
+        $allSupervisorActivity = collect()->mapInto(ActivityLogResource::class);
+        $allActivity = Activity::with('causer')
+        ->withWhereHas('causer')
+        ->latest()
+        ->paginate(Config::get('app.per_page'));
+        foreach ($allActivity as $activity) {
+            $activityCauserRole = $activity->causer->roles[0]->name  ?? null;
+            if($activityCauserRole == 'supervisor'){
                 $allSupervisorActivity->push(new ActivityLogResource($activity));
             }
         }

@@ -178,7 +178,7 @@ Route::middleware(['auth:admin','role:owner|manager'])->group(function(){
 
     Route::controller(ActivityLogController::class)->prefix('activity')
     ->group(function(){
-        Route::get('/manager','getActivityForManager');
+        Route::get('/supervisor','getActivitySupervisor');
         Route::put('/','destory');
     });
 
@@ -233,6 +233,7 @@ Route::middleware(['auth:admin','role:owner'])->group(function(){
     Route::controller(ActivityLogController::class)->prefix('activity')
     ->group(function(){
         Route::get('/','index');
+        Route::get('/manager','getActivityManager');
     });
 
 });
