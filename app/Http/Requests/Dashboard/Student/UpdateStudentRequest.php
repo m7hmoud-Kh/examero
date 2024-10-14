@@ -29,7 +29,8 @@ class UpdateStudentRequest extends FormRequest
             'email' => ['email',Rule::unique('users')->ignore($this->studentId)],
             'password' => [Password::min(8)->letters()->numbers()],
             'phone_number' => ['string','digits:10'],
-            'date_of_birth' => ['date']
+            'date_of_birth' => ['date'],
+            'group_id' => ['exists:groups,id']
         ];
     }
 
@@ -60,6 +61,9 @@ class UpdateStudentRequest extends FormRequest
             __('validation.digits',['attribute' => __('validation.attributes.phone_number')]),
             
             "date_of_birth.date" => __('validation.date'),
+
+            'group_id.exists' =>
+            __('validation.exists',['attribute' => __('validation.attributes.group_id')]),
         ];
     }
 }
