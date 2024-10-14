@@ -28,7 +28,8 @@ class StoreStudentRequest extends FormRequest
             'email' => ['required','email','unique:users'],
             'password' => ['required',Password::min(8)->letters()->numbers()],
             'phone_number' => ['required','string','digits:10'],
-            'date_of_birth' => ['required','date']
+            'date_of_birth' => ['required','date'],
+            'group_id' => ['required','exists:groups,id']
         ];
     }
 
